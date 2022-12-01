@@ -1,0 +1,11 @@
+.slideEditor {
+    display: block;
+    aspect-ratio: 16 / 9;
+    width: 90%;
+    border-color: white;
+    background-color: white;
+    border-radius: 8px;
+    align-self: center;
+    margin-left: auto;
+    margin-right: auto;
+}

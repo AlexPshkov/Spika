@@ -1,0 +1,8 @@
+.toolBar {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-color: white;
+    background-color: white;
+    gap: 50px;
+}

@@ -1,0 +1,5 @@
+.text {
+    position: relative;
+    color: red;
+    z-index: 5;
+}
