@@ -60,7 +60,8 @@ export type PrimitiveType = {
     height: number,
     backgroundColor: string,
     borderColor: string,
-    borderSize: number
+    borderSize: number,
+    position: BlockPositionType
 };
 
 export type TriangleType = {

@@ -7,8 +7,9 @@ function Picture( { url, height, width, position }: PictureType ) {
         top: position.point.y,
         width: width,
         height: height,
-        angle: position.angle
+        transform: `rotate(${position.angle.degrees}deg)`
     };
+    console.log(style);
 
     return (
         <img src={url}

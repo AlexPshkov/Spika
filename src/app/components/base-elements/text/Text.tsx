@@ -1,13 +1,13 @@
 import {TextType} from "../../../OurTypes";
 import styles from "./Text.module.css";
 
-function Text({fontFamily, fontColor, fontSize, height, width, symbols, position}: TextType ) {
+function Text( { fontFamily, fontColor, fontSize, height, width, symbols, position }: TextType ) {
     const style = {
         left: position.point.x,
         top: position.point.y,
         width: width,
         height: height,
-        angle: position.angle,
+        transform: `rotate(${position.angle.degrees}deg)`,
         "font-size": fontSize,
         "font-family": fontFamily,
         color: fontColor,

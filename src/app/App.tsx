@@ -15,11 +15,11 @@ function App() {
                 height: 200,
                 position: {
                     point: {
-                        x: 150,
-                        y: 0
+                        x: 50,
+                        y: 300
                     },
                     angle: {
-                        degrees: 0
+                        degrees: 60
                     }
                 }
             }
@@ -36,8 +36,31 @@ function App() {
                 fontSize: 20,
                 position: {
                     point: {
-                        x: -150,
-                        y: 150
+                        x: 150,
+                        y: 400
+                    },
+                    angle: {
+                        degrees: 0
+                    }
+                }
+            }
+        },
+        {
+            id: "",
+            content: {
+                type: "primitive",
+                content: {
+                    type: "triangle"
+                },
+                width: 100,
+                height: 50,
+                backgroundColor: "#FFFFFF",
+                borderColor: "#000000",
+                borderSize: 5,
+                position: {
+                    point: {
+                        x: 200,
+                        y: 200
                     },
                     angle: {
                         degrees: 0
