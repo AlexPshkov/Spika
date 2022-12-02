@@ -55,24 +55,22 @@ export type PictureType = {
 
 export type PrimitiveType = {
     type: "primitive",
-    content: TriangleType | RectangleType | CircleType,
-    background: string,
-    border: string,
+    content: TriangleType | RectangleType | EllipseType,
+    width: number,
+    height: number,
+    backgroundColor: string,
+    borderColor: string,
+    borderSize: number
 };
 
 export type TriangleType = {
-    type: "triangle",
-    height: number,
-    width: number,
+    type: "triangle"
 };
 
 export type RectangleType = {
-    type: "rectangle",
-    height: number,
-    width: number,
+    type: "rectangle"
 };
 
-export type CircleType = {
-    type: "circle",
-    radius: number,
+export type EllipseType = {
+    type: "ellipse"
 };

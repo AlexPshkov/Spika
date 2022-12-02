@@ -28,15 +28,15 @@ function App() {
             id: "",
             content: {
                 type: "text",
-                symbols: "HELP ME PLEASE",
-                width: 200,
-                height: 200,
+                symbols: "Sle-e-e-ep....",
+                width: 50,
+                height: 150,
                 fontFamily: "",
                 fontColor: "red",
                 fontSize: 20,
                 position: {
                     point: {
-                        x: 150,
+                        x: -150,
                         y: 150
                     },
                     angle: {
