@@ -3,5 +3,6 @@
   justify-content: stretch;
   width: 100%;
   height: 100%;
-  background-color: #282c34;
+  background-color: #FFFCEF;
+  overflow: hidden;
 }

@@ -77,12 +77,24 @@ function App() {
         {
             id: 1,
             blocks: blocks,
-            background: "green",
+            background: "white",
             resolution: {
                 width: 600,
                 height: 600
             },
+            isSelected: true,
             selectedBlocks: []
+        },
+        {
+          id: 2,
+          blocks: [],
+          background: "gray",
+          resolution: {
+              width: 1000,
+              height: 500
+          },
+          isSelected: false,
+          selectedBlocks: []
         }
     ];
 
@@ -97,7 +109,7 @@ function App() {
 
   return (
     <div className={styles.App}>
-      <header className="App-header"></header>
+      <header className="App-header"/>
 
       <PresentationEditor
           name={presentationParams.name}

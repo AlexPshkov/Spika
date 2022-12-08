@@ -19,6 +19,7 @@ export type SlideType = {
     blocks: BlockType[],
     background: string,
     resolution: Resolution,
+    isSelected: boolean,
     selectedBlocks: BlockType[]
 };
 
