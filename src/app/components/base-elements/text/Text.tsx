@@ -1,21 +1,23 @@
 import {TextType} from "../../../OurTypes";
 import styles from "./Text.module.css";
 
-function Text( { fontFamily, fontColor, fontSize, height, width, symbols, position }: TextType ) {
+function Text( content: { text: TextType } ) {
+    const text = content.text;
+
     const style = {
-        left: position.point.x,
-        top: position.point.y,
-        width: width,
-        height: height,
-        transform: `rotate(${position.angle.degrees}deg)`,
-        "font-size": fontSize,
-        "font-family": fontFamily,
-        color: fontColor,
+        left: text.position.point.x,
+        top: text.position.point.y,
+        width: text.width,
+        height: text.height,
+        transform: `rotate(${text.position.angle.degrees}deg)`,
+        "font-size": text.fontSize,
+        "font-family": text.fontFamily,
+        color: text.fontColor,
     };
 
     return (
         <span className={styles.text} style={style}>
-            {symbols}
+            {text.symbols}
         </span>);
 }
 

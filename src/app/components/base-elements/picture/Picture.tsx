@@ -1,18 +1,19 @@
 import {PictureType} from "../../../OurTypes";
 import styles from "./Picture.module.css";
 
-function Picture( { url, height, width, position }: PictureType ) {
+function Picture( content: { picture: PictureType } ) {
+    const picture: PictureType = content.picture;
+
     const style = {
-        left: position.point.x,
-        top: position.point.y,
-        width: width,
-        height: height,
-        transform: `rotate(${position.angle.degrees}deg)`
+        left: picture.position.point.x,
+        top: picture.position.point.y,
+        width: picture.width,
+        height: picture.height,
+        transform: `rotate(${picture.position.angle.degrees}deg)`
     };
-    console.log(style);
 
     return (
-        <img src={url}
+        <img src={picture.url}
              style={style}
              className={styles.picture}
              alt={""}>

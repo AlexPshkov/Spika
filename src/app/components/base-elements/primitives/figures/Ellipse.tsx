@@ -1,25 +1,27 @@
 import {PrimitiveType} from "../../../../OurTypes";
 import styles from "../Primitive.module.css";
 
-function Ellipse( { width, height, backgroundColor, borderColor, borderSize, position }: PrimitiveType ) {
+function Ellipse( content: { primitive: PrimitiveType } ) {
+    const primitive: PrimitiveType = content.primitive;
+
     const style = {
-        left: position.point.x,
-        top: position.point.y,
-        width: width,
-        height: height,
-        transform: `rotate(${position.angle.degrees}deg)`
+        left: primitive.position.point.x,
+        top: primitive.position.point.y,
+        width: primitive.width,
+        height: primitive.height,
+        transform: `rotate(${primitive.position.angle.degrees}deg)`
     }
 
     return (
         <svg style={style}
              className={styles.primitive}>
-            <ellipse cx={width / 2}
-                     cy={height / 2}
-                     rx={width / 2 - borderSize}
-                     ry={height / 2 - borderSize}
-                     stroke={borderColor}
-                     fill={backgroundColor}
-                     strokeWidth={borderSize}/>
+            <ellipse cx={primitive.width / 2}
+                     cy={primitive.height / 2}
+                     rx={primitive.width / 2 - primitive.borderSize}
+                     ry={primitive.height / 2 - primitive.borderSize}
+                     stroke={primitive.borderColor}
+                     fill={primitive.backgroundColor}
+                     strokeWidth={primitive.borderSize}/>
         </svg>)
 }
 

@@ -1,22 +1,24 @@
 import {PrimitiveType} from "../../../../OurTypes";
 import styles from "../Primitive.module.css";
 
-function Triangle( { width, height, backgroundColor, borderColor, borderSize, position }: PrimitiveType ) {
+function Triangle( content: { primitive: PrimitiveType } ) {
+    const primitive: PrimitiveType = content.primitive;
+
     const style = {
-        left: position.point.x,
-        top: position.point.y,
-        width: width,
-        height: height,
-        transform: `rotate(${position.angle.degrees}deg)`
+        left: primitive.position.point.x,
+        top: primitive.position.point.y,
+        width: primitive.width,
+        height: primitive.height,
+        transform: `rotate(${primitive.position.angle.degrees}deg)`
     }
 
     return (
         <svg style={style}
              className={styles.primitive}>
-            <polygon points={borderSize + "," + (height - borderSize) + " " + width / 2 + "," + borderSize + " " + (width - borderSize) + "," + (height - borderSize)}
-                     stroke={borderColor}
-                     fill={backgroundColor}
-                     strokeWidth={borderSize}/>
+            <polygon points={primitive.borderSize + "," + (primitive.height - primitive.borderSize) + " " + primitive.width / 2 + "," + primitive.borderSize + " " + (primitive.width - primitive.borderSize) + "," + (primitive.height - primitive.borderSize)}
+                     stroke={primitive.borderColor}
+                     fill={primitive.backgroundColor}
+                     strokeWidth={primitive.borderSize}/>
         </svg>)
 }
 

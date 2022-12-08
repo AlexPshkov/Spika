@@ -2,9 +2,7 @@ import styles from "./SlideEditor.module.css";
 import {BlockType, SlideType} from "../../OurTypes";
 import Picture from "../base-elements/picture/Picture";
 import Text from "../base-elements/text/Text";
-import Triangle from "../base-elements/primitives/figures/Triangle";
-import Rectangle from "../base-elements/primitives/figures/Rectangle";
-import Ellipse from "../base-elements/primitives/figures/Ellipse";
+import Primitive from "../base-elements/primitives/Primitive";
 
 function SlideEditor({id, blocks, background, resolution, selectedBlocks}: SlideType ) {
     const style = {
@@ -18,52 +16,11 @@ function SlideEditor({id, blocks, background, resolution, selectedBlocks}: Slide
 
         switch (content.type) {
             case "picture":
-                return <Picture width={content.width}
-                                height={content.height}
-                                url={content.url}
-                                type={content.type}
-                                position={content.position}/>
+                return <Picture picture={content}/>
             case "text":
-                return <Text type={content.type}
-                             fontFamily={content.fontFamily}
-                             fontColor={content.fontColor}
-                             fontSize={content.fontSize}
-                             height={content.height}
-                             width={content.width}
-                             symbols={content.symbols}
-                             position={content.position} />
+                return <Text text={content}/>
             case "primitive":
-                switch (content.content.type) {
-                    case "triangle":
-                        return <Triangle type={content.type}
-                                         content={content.content}
-                                         width={content.width}
-                                         height={content.height}
-                                         backgroundColor={content.backgroundColor}
-                                         borderColor={content.borderColor}
-                                         borderSize={content.borderSize}
-                                         position={content.position} />
-                    case "rectangle":
-                        return <Rectangle type={content.type}
-                                          content={content.content}
-                                          width={content.width}
-                                          height={content.height}
-                                          backgroundColor={content.backgroundColor}
-                                          borderColor={content.borderColor}
-                                          borderSize={content.borderSize}
-                                          position={content.position} />
-                    case "ellipse":
-                        return <Ellipse type={content.type}
-                                        content={content.content}
-                                        width={content.width}
-                                        height={content.height}
-                                        backgroundColor={content.backgroundColor}
-                                        borderColor={content.borderColor}
-                                        borderSize={content.borderSize}
-                                        position={content.position} />
-                    default:
-                        return <span>Default span</span>
-                }
+                return <Primitive primitive={content}/>
             default:
                 return <span>Default span</span>
         }
