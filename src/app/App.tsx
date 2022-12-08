@@ -7,7 +7,8 @@ function App() {
 
     const blocks: BlockType[] = [
         {
-            id: "",
+            id: "123",
+            isSelected: true,
             content: {
                 type: "picture",
                 url: "https://demotivation.ru/wp-content/uploads/2021/06/5-27.jpg",
@@ -26,6 +27,7 @@ function App() {
         },
         {
             id: "",
+            isSelected: true,
             content: {
                 type: "text",
                 symbols: "Sle-e-e-ep....",
@@ -47,6 +49,7 @@ function App() {
         },
         {
             id: "",
+            isSelected: false,
             content: {
                 type: "primitive",
                 content: {

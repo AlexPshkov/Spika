@@ -10,3 +10,7 @@
     margin-right: auto;
     position: relative;
 }
+
+.selectedElement > * {
+    border: 3px dotted red;
+}

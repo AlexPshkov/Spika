@@ -11,8 +11,8 @@ function SlideEditor({id, blocks, background, resolution, selectedBlocks}: Slide
         height: resolution.height
     }
 
-    function VisualizeBlock( block: BlockType ): any {
-        const content = block.content;
+    function GetBlock( blockType: BlockType ): any {
+        const content = blockType.content;
 
         switch (content.type) {
             case "picture":
@@ -24,6 +24,12 @@ function SlideEditor({id, blocks, background, resolution, selectedBlocks}: Slide
             default:
                 return <span>Default span</span>
         }
+    }
+
+    function VisualizeBlock( blockType: BlockType ): any {
+        const blockHtml: any = GetBlock(blockType);
+
+        return <div className={blockType.isSelected ? styles.selectedElement : ""}>{blockHtml}</div>
     }
 
     return (
