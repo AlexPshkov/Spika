@@ -10,6 +10,8 @@
     background: #FFF7CE;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
     border-radius: 0 0 10px 0;
+
+    z-index: 49;
 }
 
 .tool {

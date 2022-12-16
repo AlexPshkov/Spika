@@ -7,7 +7,7 @@ import MovableElement from "../special-elements/MovableElement";
 import {useState} from "react";
 
 function SlideEditor(content: { slide: SlideType, updateSlide: (slide: SlideType) => void } ) {
-    const [slide, setSlide] = useState(content.slide);
+    const [slide, setSlide] = useState<SlideType>(content.slide);
 
     let style = {
         backgroundColor: slide.background,
@@ -42,10 +42,11 @@ function SlideEditor(content: { slide: SlideType, updateSlide: (slide: SlideType
     }
 
     function VisualizeBlock( blockType: BlockType ): any {
-        const blockHtml: any = <MovableElement element={GetBlock(blockType)}
-                                               elementPosition={blockType.content.position}
-                                               positionUpdateFunc={(x, y) => UpdateElementPosition(blockType, x, y)}></MovableElement>
-        return <div className={blockType.isSelected ? styles.selectedElement : ""}>{blockHtml}</div>
+        const element = <div className={blockType.isSelected ? styles.selectedElement : ""}>{GetBlock(blockType)}</div>;
+
+        return <MovableElement element={element}
+                               elementPosition={blockType.content.position}
+                               positionUpdateFunc={(x, y) => UpdateElementPosition(blockType, x, y)}/>
     }
 
     return (

@@ -103,7 +103,8 @@ function App() {
         slides: slides,
         selection: {
             selectedSlides: []
-        }
+        },
+        currentSlideId: 1
     };
 
 
