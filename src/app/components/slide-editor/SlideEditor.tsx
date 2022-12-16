@@ -3,20 +3,35 @@ import {BlockType, SlideType} from "../../OurTypes";
 import Picture from "../base-elements/picture/Picture";
 import Text from "../base-elements/text/Text";
 import Primitive from "../base-elements/primitives/Primitive";
+import MovableElement from "../special-elements/MovableElement";
+import {useState} from "react";
 
-function SlideEditor({id, blocks, background, resolution, selectedBlocks}: SlideType ) {
-    const style = {
-        backgroundColor: background,
-        width: resolution.width,
-        height: resolution.height
+function SlideEditor(content: { slide: SlideType, updateSlide: (slide: SlideType) => void } ) {
+    const [slide, setSlide] = useState(content.slide);
+
+    let style = {
+        backgroundColor: slide.background,
+        width: slide.resolution.width,
+        height: slide.resolution.height
     }
+
+    function UpdateElementPosition(block: BlockType, x: number, y: number) {
+        if (!block) return;
+
+        block.content.position.point.x = x;
+        block.content.position.point.y = y;
+
+        setSlide({...content.slide});
+    }
+
+
 
     function GetBlock( blockType: BlockType ): any {
         const content = blockType.content;
 
         switch (content.type) {
             case "picture":
-                return <Picture picture={content}/>
+                return <Picture picture={content} />;
             case "text":
                 return <Text text={content}/>
             case "primitive":
@@ -27,14 +42,15 @@ function SlideEditor({id, blocks, background, resolution, selectedBlocks}: Slide
     }
 
     function VisualizeBlock( blockType: BlockType ): any {
-        const blockHtml: any = GetBlock(blockType);
-
+        const blockHtml: any = <MovableElement element={GetBlock(blockType)}
+                                               elementPosition={blockType.content.position}
+                                               positionUpdateFunc={(x, y) => UpdateElementPosition(blockType, x, y)}></MovableElement>
         return <div className={blockType.isSelected ? styles.selectedElement : ""}>{blockHtml}</div>
     }
 
     return (
         <div className={styles.slideEditor} style={style}>
-            {blocks.map(x => VisualizeBlock(x))}
+            {slide.blocks.map(x => VisualizeBlock(x))}
         </div>
     );
 }

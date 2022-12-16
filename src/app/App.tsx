@@ -86,19 +86,19 @@ function App() {
             selectedBlocks: []
         },
         {
-          id: 2,
-          blocks: [],
-          background: "gray",
-          resolution: {
-              width: 1000,
-              height: 500
-          },
-          isSelected: false,
-          selectedBlocks: []
+            id: 2,
+            blocks: [],
+            background: "gray",
+            resolution: {
+                width: 1000,
+                height: 500
+            },
+            isSelected: false,
+            selectedBlocks: []
         }
     ];
 
-    const presentationParams: PresentationType = {
+    const presentation: PresentationType = {
         name: "Some presentation name",
         slides: slides,
         selection: {
@@ -111,10 +111,7 @@ function App() {
     <div className={styles.App}>
       <header className="App-header"/>
 
-      <PresentationEditor
-          name={presentationParams.name}
-          slides={presentationParams.slides}
-          selection={presentationParams.selection} />
+      <PresentationEditor presentation={presentation}/>
     </div>
   );
 }
