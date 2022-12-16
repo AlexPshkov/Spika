@@ -5,11 +5,11 @@ function Rectangle( content: { primitive: PrimitiveType } ) {
     const primitive: PrimitiveType = content.primitive;
 
     const style = {
-        left: primitive.position.point.x,
-        top: primitive.position.point.y,
-        width: primitive.width,
-        height: primitive.height,
-        transform: `rotate(${primitive.position.angle.degrees}deg)`
+        // left: primitive.position.point.x,
+        // top: primitive.position.point.y,
+        width: "100%",
+        height: "100%"
+        // transform: `rotate(${primitive.position.angle.degrees}deg)`
     }
 
     return (

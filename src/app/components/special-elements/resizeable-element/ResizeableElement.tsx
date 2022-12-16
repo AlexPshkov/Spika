@@ -73,15 +73,15 @@ function ResizeableElement(content: { element: ReactNode, elementContext: BlockT
         contentElement = <div className={styles.transformBlock}>
             {content.element}
             <div className={styles.topLeftPoint}
-                 onMouseDown={(event) => onMouseDown(event, 1)}></div>
+                 onMouseDown={(event) => onMouseDown(event, 1)}/>
             <div className={styles.topRightPoint}
-                 onMouseDown={(event) => onMouseDown(event, 2)}></div>
+                 onMouseDown={(event) => onMouseDown(event, 2)}/>
             <div className={styles.bottomLeftPoint}
-                 onMouseDown={(event) => onMouseDown(event, 3)}></div>
+                 onMouseDown={(event) => onMouseDown(event, 3)}/>
             <div className={styles.bottomRightPoint}
-                 onMouseDown={(event) => onMouseDown(event, 4)}></div>
+                 onMouseDown={(event) => onMouseDown(event, 4)}/>
             <div className={styles.middleRotate}
-                 onMouseDown={(event) => onMouseDown(event, 5)}></div>
+                 onMouseDown={(event) => onMouseDown(event, 5)}/>
         </div>
     }
 

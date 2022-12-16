@@ -5,11 +5,11 @@ function Text( content: { text: TextType } ) {
     const text = content.text;
 
     const style = {
-        left: text.position.point.x,
-        top: text.position.point.y,
+        // left: text.position.point.x,
+        // top: text.position.point.y,
         width: text.width,
         height: text.height,
-        transform: `rotate(${text.position.angle.degrees}deg)`,
+        // transform: `rotate(${text.position.angle.degrees}deg)`,
         "font-size": text.fontSize,
         "font-family": text.fontFamily,
         color: text.fontColor,
