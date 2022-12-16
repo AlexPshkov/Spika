@@ -3,13 +3,11 @@ import {BlockType, SlideType} from "../../OurTypes";
 import Picture from "../base-elements/picture/Picture";
 import Text from "../base-elements/text/Text";
 import Primitive from "../base-elements/primitives/Primitive";
-import MovableElement from "../special-elements/movable-element/MovableElement";
+import MovableElement from "../special-elements/MovableElement";
 import {useState} from "react";
-import ResizeableElement from "../special-elements/resizeable-element/ResizeableElement";
-import SelectableElement from "../special-elements/selectable-element/SelectableElement";
 
 function SlideEditor(content: { slide: SlideType, updateSlide: (slide: SlideType) => void } ) {
-    const [slide, setSlide] = useState(content.slide);
+    const [slide, setSlide] = useState<SlideType>(content.slide);
 
     let style = {
         backgroundColor: slide.background,
@@ -55,18 +53,10 @@ function SlideEditor(content: { slide: SlideType, updateSlide: (slide: SlideType
     }
 
     function VisualizeBlock( blockType: BlockType ): any {
-        const simpleElement: any = GetBlock(blockType);
-
-        const selectableElement: any = <SelectableElement element={simpleElement}
-                                                          elementContext={blockType}
-                                                          selectUpdateFunc={(isSelected) => UpdateElementSelect(blockType, isSelected)}/>
-        const resizeableElement: any = <ResizeableElement element={selectableElement}
-                                                          elementContext={blockType.content}
-                                                          transformUpdateFunc={(angle, width, height) => UpdateElementTransform(blockType, angle, width, height)}/>
-        const movableElement: any = <MovableElement element={resizeableElement}
-                                                     elementPosition={blockType.content.position}
-                                                     positionUpdateFunc={(x, y) => UpdateElementPosition(blockType, x, y)}/>;
-        return movableElement;
+        const blockHtml: any = <MovableElement element={GetBlock(blockType)}
+                                               elementPosition={blockType.content.position}
+                                               positionUpdateFunc={(x, y) => UpdateElementPosition(blockType, x, y)}></MovableElement>
+        return <div className={blockType.isSelected ? styles.selectedElement : ""}>{blockHtml}</div>
     }
 
     return (

@@ -10,6 +10,11 @@ function PresentationEditor(content: { presentation: PresentationType }) {
     const [presentation, setPresentation] = useState<PresentationType>(content.presentation);
     const slide = presentation.slides[0];
 
+    function UpdatePresentation( presentation: PresentationType ) {
+        setPresentation({...presentation});
+    }
+
+
     function UpdateSlide( slide: SlideType ) {
 
         //TODO обновление конкретного слайда
@@ -20,14 +25,18 @@ function PresentationEditor(content: { presentation: PresentationType }) {
         <div className={styles.editor}>
             <NavigationBar name={presentation.name}
                            slides={presentation.slides}
-                           selection={presentation.selection} />
+                           selection={presentation.selection}
+                           currentSlideId={presentation.currentSlideId}/>
 
             <div className={styles.horizontal}>
-                <ToolBar />
+                <ToolBar presentation={presentation} requireUpdate={presentation => UpdatePresentation(presentation)}/>
                 <SlideEditor slide={slide} updateSlide={elem => UpdateSlide(elem)} />
             </div>
             <div className={styles.slidesListContainer}>
-                <SlidesList name={presentation.name} slides={presentation.slides} selection={presentation.selection} />
+                <SlidesList name={presentation.name}
+                            slides={presentation.slides}
+                            selection={presentation.selection}
+                            currentSlideId={presentation.currentSlideId}/>
             </div>
         </div>
     );
