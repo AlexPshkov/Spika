@@ -2,29 +2,32 @@ import styles from "./PresentationEditor.module.css";
 import SlideEditor from "../slide-editor/SlideEditor";
 import ToolBar from "../tool-bar/ToolBar";
 import NavigationBar from "../nav-bar/NavigationBar";
-import {PresentationType} from "../../OurTypes";
+import {PresentationType, SlideType} from "../../OurTypes";
 import SlidesList from "../slides-list/SlidesList";
+import {useState} from "react";
 
-function PresentationEditor( { name, slides, selection }: PresentationType) {
-    const slide = slides[0];
+function PresentationEditor(content: { presentation: PresentationType }) {
+    const [presentation, setPresentation] = useState<PresentationType>(content.presentation);
+    const slide = presentation.slides[0];
+
+    function UpdateSlide( slide: SlideType ) {
+
+        //TODO обновление конкретного слайда
+        setPresentation(presentation);
+    }
 
     return (
         <div className={styles.editor}>
-            <NavigationBar name={name}
-                           slides={slides}
-                           selection={selection} />
+            <NavigationBar name={presentation.name}
+                           slides={presentation.slides}
+                           selection={presentation.selection} />
 
             <div className={styles.horizontal}>
                 <ToolBar />
-                <SlideEditor id={slide.id}
-                             blocks={slide.blocks}
-                             selectedBlocks={slide.selectedBlocks}
-                             background={slide.background}
-                             resolution={slide.resolution}
-                             isSelected={slide.isSelected} />
+                <SlideEditor slide={slide} updateSlide={elem => UpdateSlide(elem)} />
             </div>
             <div className={styles.slidesListContainer}>
-                <SlidesList name={name} slides={slides} selection={selection} />
+                <SlidesList name={presentation.name} slides={presentation.slides} selection={presentation.selection} />
             </div>
         </div>
     );
