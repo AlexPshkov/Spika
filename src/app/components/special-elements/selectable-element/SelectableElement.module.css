@@ -1,0 +1,7 @@
+.selectedElement > * {
+    border: 3px dotted green;
+}
+
+.nonSelectedElement > * {
+    border: 3px dotted transparent;
+}

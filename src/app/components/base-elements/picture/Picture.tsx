@@ -5,11 +5,13 @@ function Picture( content: { picture: PictureType } ) {
     const picture: PictureType = content.picture;
 
     const style = {
-        left: picture.position.point.x,
-        top: picture.position.point.y,
-        width: picture.width,
-        height: picture.height,
-        transform: `rotate(${picture.position.angle.degrees}deg)`
+        width: "100%",
+        height: "100%",
+        // left: picture.position.point.x,
+        // top: picture.position.point.y,
+        // width: picture.width,
+        // height: picture.height,
+        // transform: `rotate(${picture.position.angle.degrees}deg)`
     };
 
     return (

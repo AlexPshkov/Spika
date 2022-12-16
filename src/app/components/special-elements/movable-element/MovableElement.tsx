@@ -1,5 +1,6 @@
 import React, {ReactNode} from "react";
-import {BlockPositionType} from "../../OurTypes";
+import {BlockPositionType} from "../../../OurTypes";
+import styles from "./MovableElement.module.css";
 
 
 function MovableElement(content: { element: ReactNode, elementPosition: BlockPositionType, positionUpdateFunc: (x: number, y: number) => void }) {
@@ -43,7 +44,7 @@ function MovableElement(content: { element: ReactNode, elementPosition: BlockPos
     return (
         <div onDragStart={(event) => event.preventDefault()}
              onMouseDown={(event) => onMouseDownHandler(event)}>
-            {content.element}
+            <div className={styles.block}>{content.element}</div>
         </div>
     )
 }

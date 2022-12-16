@@ -1,0 +1,59 @@
+.block {
+    position: absolute;
+}
+
+.transformBlock {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.middleRotate {
+    position: absolute;
+    left: 50%;
+    top: -20px;
+    width: 20px;
+    background-color: red;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.topLeftPoint {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    background-color: red;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.topRightPoint {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 20px;
+    background-color: red;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.bottomLeftPoint {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 20px;
+    background-color: red;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.bottomRightPoint {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 20px;
+    background-color: red;
+    height: 20px;
+    border-radius: 50%;
+}
