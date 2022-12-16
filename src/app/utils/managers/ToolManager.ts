@@ -1,20 +1,20 @@
-import {BlockType, SlideType} from "../../OurTypes";
+import {BlockType, PresentationType, SlideType} from "../../OurTypes";
 
 
 export class ToolManager{
 
 
-    private static GetMaxBlockId( blocks: BlockType[] ) {
-        let MaxBlockId = 0;
-        blocks.forEach(x => {
-            if (x.id > MaxBlockId) MaxBlockId = x.id
+    private static GetMaxId( elements: BlockType[] | SlideType[] ) {
+        let MaxId = 0;
+        elements.forEach(x => {
+            if (x.id > MaxId) MaxId = x.id
         })
-        return MaxBlockId
+        return MaxId
     }
 
     static CreateFigure( slide: SlideType ) {
         const Block: BlockType = {
-            id: ToolManager.GetMaxBlockId( slide.blocks ),
+            id: ToolManager.GetMaxId( slide.blocks ),
             isSelected: true,
             content: {
                 type: "primitive",
@@ -43,7 +43,7 @@ export class ToolManager{
 
     static CreateText( slide: SlideType ) {
             const Block: BlockType = {
-            id: ToolManager.GetMaxBlockId( slide.blocks ),
+            id: ToolManager.GetMaxId( slide.blocks ),
             isSelected: true,
             content: {
                 type: "text",
@@ -70,7 +70,7 @@ export class ToolManager{
 
     static CreateImage( slide: SlideType ) {
         const Block: BlockType = {
-            id: ToolManager.GetMaxBlockId( slide.blocks ),
+            id: ToolManager.GetMaxId( slide.blocks ),
             isSelected: true,
             content: {
                 type: "picture",
@@ -92,5 +92,20 @@ export class ToolManager{
         slide.blocks.push(Block)
     }
 
+    static CreateSlide( presentation: PresentationType ) {
+        const Slide: SlideType = {
+            id: ToolManager.GetMaxId(presentation.slides),
+            blocks: [],
+            background: "white",
+            resolution: {
+                width: 1280,
+                height: 720
+            },
+            isSelected: false,
+            selectedBlocks: []
+        }
+
+        presentation.slides.push(Slide)
+    }
 
 }
