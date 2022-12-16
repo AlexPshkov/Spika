@@ -1,5 +1,5 @@
 export type BlockType = {
-    id: string,
+    id: number,
     isSelected: boolean,
     content: TextType | PictureType | PrimitiveType
 };

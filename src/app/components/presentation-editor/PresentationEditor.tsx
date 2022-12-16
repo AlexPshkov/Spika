@@ -15,7 +15,9 @@ function PresentationEditor( { name, slides, selection }: PresentationType) {
                            selection={selection} />
 
             <div className={styles.horizontal}>
-                <ToolBar />
+                <ToolBar name={name}
+                         slides={slides}
+                         selection={selection}/>
                 <SlideEditor id={slide.id}
                              blocks={slide.blocks}
                              selectedBlocks={slide.selectedBlocks}

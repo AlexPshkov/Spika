@@ -7,7 +7,7 @@ function App() {
 
     const blocks: BlockType[] = [
         {
-            id: "123",
+            id: 3,
             isSelected: true,
             content: {
                 type: "picture",
@@ -26,7 +26,7 @@ function App() {
             }
         },
         {
-            id: "",
+            id: 1,
             isSelected: true,
             content: {
                 type: "text",
@@ -48,7 +48,7 @@ function App() {
             }
         },
         {
-            id: "",
+            id: 2,
             isSelected: false,
             content: {
                 type: "primitive",
