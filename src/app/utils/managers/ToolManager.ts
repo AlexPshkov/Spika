@@ -1,4 +1,4 @@
-import {BlockType, PresentationType, SlideType} from "../../OurTypes";
+import {BlockType, SlideType} from "../../OurTypes";
 
 
 export class ToolManager{
@@ -48,8 +48,8 @@ export class ToolManager{
             content: {
                 type: "text",
                 symbols: "Text here",
-                width: "fit-content",
-                height: "fit-content",
+                width: 100,
+                height: 100,
                 fontFamily: "",
                 fontColor: "black",
                 fontSize: 14,
@@ -75,7 +75,7 @@ export class ToolManager{
             content: {
                 type: "picture",
                 url: "https://demotivation.ru/wp-content/uploads/2021/06/5-27.jpg",
-                width: "auto",
+                width: 100,
                 height: 100,
                 position: {
                     point: {

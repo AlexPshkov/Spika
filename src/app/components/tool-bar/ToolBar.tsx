@@ -1,7 +1,6 @@
 import styles from "./ToolBar.module.css";
-import {PresentationType, SlideType} from "../../OurTypes";
+import {PresentationType} from "../../OurTypes";
 import {ToolManager} from "../../utils/managers/ToolManager";
-import {useState} from "react";
 
 function ToolBar( content: { presentation: PresentationType, requireUpdate: (presentation: PresentationType) => void } ) {
     const currentSlide = (content.presentation.slides.find(slide => { return slide.id === content.presentation.currentSlideId})) || content.presentation.slides[1];

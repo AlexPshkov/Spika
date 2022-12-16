@@ -42,8 +42,8 @@ export type TextType = {
     fontFamily: string,
     fontColor: string,
     fontSize: number,
-    height: number | string,
-    width: number | string,
+    height: number,
+    width: number,
     symbols: string,
     position: BlockPositionType
 };
@@ -51,8 +51,8 @@ export type TextType = {
 export type PictureType = {
     type: "picture",
     url: string,
-    width: number | string,
-    height: number | string,
+    width: number,
+    height: number,
     position: BlockPositionType
 };
 

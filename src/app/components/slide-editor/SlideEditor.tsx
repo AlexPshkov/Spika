@@ -60,13 +60,14 @@ function SlideEditor(content: { slide: SlideType, updateSlide: (slide: SlideType
         const selectableElement: any = <SelectableElement element={simpleElement}
                                                           elementContext={blockType}
                                                           selectUpdateFunc={(isSelected) => UpdateElementSelect(blockType, isSelected)}/>
-        const resizeableElement: any = <ResizeableElement element={selectableElement}
-                                                          elementContext={blockType.content}
-                                                          transformUpdateFunc={(angle, width, height) => UpdateElementTransform(blockType, angle, width, height)}/>
-        const movableElement: any = <MovableElement element={resizeableElement}
+        const movableElement: any = <MovableElement element={selectableElement}
                                                     elementPosition={blockType.content.position}
                                                     positionUpdateFunc={(x, y) => UpdateElementPosition(blockType, x, y)}/>;
-        return movableElement;
+        const resizeableElement: any = <ResizeableElement element={movableElement}
+                                                          elementContext={blockType}
+                                                          transformUpdateFunc={(angle, width, height) => UpdateElementTransform(blockType, angle, width, height)}/>
+
+        return resizeableElement;
     }
 
     return (
