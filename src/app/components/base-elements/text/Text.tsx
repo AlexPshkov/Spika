@@ -10,8 +10,8 @@ function Text( content: { text: TextType } ) {
         width: text.width,
         height: text.height,
         // transform: `rotate(${text.position.angle.degrees}deg)`,
-        "font-size": text.fontSize,
-        "font-family": text.fontFamily,
+        "fontSize": text.fontSize,
+        "fontFamily": text.fontFamily,
         color: text.fontColor,
     };
 
