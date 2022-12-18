@@ -5,13 +5,9 @@ export type BlockType = {
 };
 
 export type BlockPositionType = {
-    point: {
-        x: number,
-        y: number
-    },
-    angle: {
-        degrees: number
-    }
+    x: number,
+    y: number,
+    angle: number
 }
 
 export type SlideType = {
@@ -58,23 +54,11 @@ export type PictureType = {
 
 export type PrimitiveType = {
     type: "primitive",
-    content: TriangleType | RectangleType | EllipseType,
+    style: "triangle" | "rectangle" | "ellipse",
     width: number,
     height: number,
     backgroundColor: string,
     borderColor: string,
     borderSize: number,
     position: BlockPositionType
-};
-
-export type TriangleType = {
-    type: "triangle"
-};
-
-export type RectangleType = {
-    type: "rectangle"
-};
-
-export type EllipseType = {
-    type: "ellipse"
 };

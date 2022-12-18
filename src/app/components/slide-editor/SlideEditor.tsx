@@ -18,8 +18,8 @@ function SlideEditor(content: { slide: SlideType, updateSlide: (slide: SlideType
     }
 
     function UpdateElementPosition(block: BlockType, x: number, y: number) {
-        block.content.position.point.x = x;
-        block.content.position.point.y = y;
+        block.content.position.x = x;
+        block.content.position.y = y;
 
         setSlide({...content.slide});
     }
@@ -31,7 +31,7 @@ function SlideEditor(content: { slide: SlideType, updateSlide: (slide: SlideType
     }
 
     function UpdateElementTransform(block: BlockType, angle: number, width: number, height: number ) {
-        block.content.position.angle.degrees = angle;
+        block.content.position.angle = angle;
         block.content.width = width;
         block.content.height = height;
 

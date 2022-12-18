@@ -8,8 +8,8 @@ function MovableElement(content: { element: ReactNode, elementPosition: BlockPos
     let dragStartX: number = 0;
     let dragStartY: number = 0;
 
-    const startPositionX: number = content.elementPosition.point.x;
-    const startPositionY: number = content.elementPosition.point.y;
+    const startPositionX: number = content.elementPosition.x;
+    const startPositionY: number = content.elementPosition.y;
 
     function onMouseDownHandler(mouseEvent: React.MouseEvent<HTMLDivElement>) {
         isTaken = true;

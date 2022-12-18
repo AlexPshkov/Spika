@@ -1,0 +1,15 @@
+.informationPanel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 8px 8px;
+
+    gap: 5px;
+
+    width: 280px;
+
+    background: #FFF7CE;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
+
+    z-index: 49;
+}

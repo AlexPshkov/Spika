@@ -18,22 +18,16 @@ export class ToolManager{
             isSelected: true,
             content: {
                 type: "primitive",
-                content: {
-                    type: "rectangle"
-                },
+                style: "rectangle",
                 width: 50,
                 height: 50,
                 backgroundColor: "white",
                 borderColor: "black",
                 borderSize: 2,
                 position: {
-                    point: {
-                        x: 50,
-                        y: 50
-                    },
-                    angle: {
-                        degrees: 0
-                    }
+                    x: 50,
+                    y: 50,
+                    angle: 0
                 }
             }
         }
@@ -54,13 +48,9 @@ export class ToolManager{
                 fontColor: "black",
                 fontSize: 14,
                 position: {
-                    point: {
-                        x: 50,
-                        y: 50
-                    },
-                    angle: {
-                        degrees: 0
-                    }
+                    x: 50,
+                    y: 50,
+                    angle: 0
                 }
             }
         }
@@ -78,13 +68,9 @@ export class ToolManager{
                 width: 100,
                 height: 100,
                 position: {
-                    point: {
-                        x: 50,
-                        y: 50
-                    },
-                    angle: {
-                        degrees: 0
-                    }
+                    x: 50,
+                    y: 50,
+                    angle: 0
                 }
             }
         }

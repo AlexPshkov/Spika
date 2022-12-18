@@ -16,11 +16,11 @@ function ResizeableElement(content: { element: ReactNode, elementContext: BlockT
     let startDegree: number = 0;
 
     const style = {
-        left: content.elementContext.content.position.point.x,
-        top: content.elementContext.content.position.point.y,
+        left: content.elementContext.content.position.x,
+        top: content.elementContext.content.position.y,
         width: content.elementContext.content.width,
         height: content.elementContext.content.height,
-        transform: `rotate(${content.elementContext.content.position.angle.degrees}deg)`
+        transform: `rotate(${content.elementContext.content.position.angle}deg)`
     };
 
     function onMouseDown(mouseEvent: React.MouseEvent<HTMLDivElement>, cornerNumber: number) {
@@ -33,7 +33,7 @@ function ResizeableElement(content: { element: ReactNode, elementContext: BlockT
 
         startWidth = content.elementContext.content.width;
         startHeight = content.elementContext.content.height;
-        startDegree = content.elementContext.content.position.angle.degrees;
+        startDegree = content.elementContext.content.position.angle;
 
         document.addEventListener("mouseup", (event) => onMouseUp(event, cornerNumber) );
         document.addEventListener("mousemove", (event) => onMouseMove(event, cornerNumber) );

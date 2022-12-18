@@ -15,13 +15,9 @@ function App() {
                 width: 200,
                 height: 200,
                 position: {
-                    point: {
-                        x: 50,
-                        y: 300
-                    },
-                    angle: {
-                        degrees: 60
-                    }
+                    x: 50,
+                    y: 300,
+                    angle: 60
                 }
             }
         },
@@ -37,13 +33,9 @@ function App() {
                 fontColor: "red",
                 fontSize: 20,
                 position: {
-                    point: {
-                        x: 150,
-                        y: 400
-                    },
-                    angle: {
-                        degrees: 0
-                    }
+                    x: 150,
+                    y: 400,
+                    angle: 0
                 }
             }
         },
@@ -52,22 +44,16 @@ function App() {
             isSelected: false,
             content: {
                 type: "primitive",
-                content: {
-                    type: "triangle"
-                },
+                style: "triangle",
                 width: 100,
                 height: 50,
                 backgroundColor: "#FFFFFF",
                 borderColor: "#000000",
                 borderSize: 5,
                 position: {
-                    point: {
-                        x: 200,
-                        y: 200
-                    },
-                    angle: {
-                        degrees: 0
-                    }
+                    x: 200,
+                    y: 200,
+                    angle: 0
                 }
             }
         }
@@ -88,7 +74,7 @@ function App() {
         {
             id: 2,
             blocks: [],
-            background: "gray",
+            background: "white",
             resolution: {
                 width: 1000,
                 height: 500

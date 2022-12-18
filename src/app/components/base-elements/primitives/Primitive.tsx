@@ -6,7 +6,7 @@ import Ellipse from "./figures/Ellipse";
 function Primitive( content: { primitive: PrimitiveType } ) {
     const primitiveType: PrimitiveType = content.primitive;
 
-    switch (primitiveType.content.type) {
+    switch (primitiveType.style) {
         case "triangle":
             return <Triangle primitive={primitiveType} />
         case "rectangle":
