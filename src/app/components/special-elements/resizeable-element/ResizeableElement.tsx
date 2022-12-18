@@ -5,15 +5,6 @@ import styles from "./ResizeableElement.module.css";
 
 function ResizeableElement(content: { element: ReactNode, elementContext: BlockType, transformUpdateFunc: (angle: number, width: number, height: number) => void }) {
     let isTaken: boolean = false;
-    let dragStartX: number = 0;
-    let dragStartY: number = 0;
-
-    let startPositionX: number = 0;
-    let startPositionY: number = 0;
-
-    let startWidth: number = 0;
-    let startHeight: number = 0;
-    let startDegree: number = 0;
 
     const style = {
         left: content.elementContext.content.position.x,
