@@ -7,7 +7,7 @@ import figureIcon from "../../images/figure.svg"
 import newSlideIcon from "../../images/new_slide.svg"
 
 function ToolBar( content: { presentation: PresentationType, requireUpdate: (presentation: PresentationType) => void } ) {
-    const currentSlide = (content.presentation.slides.find(slide => { return slide.id === content.presentation.currentSlideId})) || content.presentation.slides[1];
+    const currentSlide = (content.presentation.slides.find(slide => { return slide.id === content.presentation.currentSlideId})) || content.presentation.slides[0];
 
     function UnselectBlocks() {
         currentSlide.blocks.forEach(block => { block.isSelected = false})

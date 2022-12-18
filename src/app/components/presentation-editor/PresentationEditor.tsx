@@ -19,7 +19,7 @@ function PresentationEditor(content: { presentation: PresentationType }) {
     function UpdateSlide( slide: SlideType ) {
 
         //TODO обновление конкретного слайда
-        setPresentation(presentation);
+        setPresentation({...presentation});
     }
 
     return (
@@ -32,7 +32,7 @@ function PresentationEditor(content: { presentation: PresentationType }) {
             <div className={styles.horizontal}>
                 <ToolBar presentation={presentation} requireUpdate={presentation => UpdatePresentation(presentation)}/>
                 <div className={styles.slideField}>
-                    <SlideEditor slide={slide} updateSlide={elem => UpdateSlide(elem)} />
+                    <SlideEditor slide={slide} updateSlide={slide => UpdateSlide(slide)} />
                     <SlidesList name={presentation.name}
                                 slides={presentation.slides}
                                 selection={presentation.selection}

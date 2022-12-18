@@ -21,13 +21,15 @@ function SlideEditor(content: { slide: SlideType, updateSlide: (slide: SlideType
         block.content.position.x = x;
         block.content.position.y = y;
 
-        setSlide({...content.slide});
+        // setSlide({...content.slide});
+        content.updateSlide({...slide});
     }
 
     function UpdateElementSelect(block: BlockType, isSelected: boolean) {
         block.isSelected = isSelected;
 
-        setSlide({...content.slide});
+        // setSlide({...content.slide});
+        content.updateSlide({...slide});
     }
 
     function UpdateElementTransform(block: BlockType, angle: number, width: number, height: number ) {
@@ -35,7 +37,8 @@ function SlideEditor(content: { slide: SlideType, updateSlide: (slide: SlideType
         block.content.width = width;
         block.content.height = height;
 
-        setSlide({...content.slide});
+        // setSlide({...content.slide});
+        content.updateSlide({...slide});
     }
 
 
