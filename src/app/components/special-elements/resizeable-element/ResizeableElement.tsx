@@ -13,6 +13,9 @@ function ResizeableElement(content: { element: ReactNode, elementContext: BlockT
     let startPositionX: number = 0;
     let startPositionY: number = 0;
 
+    let figureCenterPositionX: number = 0;
+    let figureCenterPositionY: number = 0;
+
     let startWidth: number = 0;
     let startHeight: number = 0;
     let startDegree: number = 0;
@@ -32,6 +35,15 @@ function ResizeableElement(content: { element: ReactNode, elementContext: BlockT
 
         startPositionX = 0;
         startPositionY = 0;
+
+        const nativeElement = mouseEvent.currentTarget.parentElement?.querySelector("img, span, svg");
+        const poses = nativeElement?.getBoundingClientRect()!;
+
+        figureCenterPositionX = poses.left + poses.width / 2;
+        figureCenterPositionY = poses.top + poses.height / 2;
+
+        //TODO Удалить это
+        moveCircleTo(figureCenterPositionX, figureCenterPositionY);
 
         startWidth = content.elementContext.content.width;
         startHeight = content.elementContext.content.height;
@@ -56,10 +68,26 @@ function ResizeableElement(content: { element: ReactNode, elementContext: BlockT
                 content.transformUpdateFunc(startDegree, startWidth + newX, startHeight + newY);
                 break;
             case 5:
-                content.transformUpdateFunc(startDegree + newY * 0.5 + newX * 0.5, startWidth, startHeight);
+                content.transformUpdateFunc(getNewDegree(mouseEvent.clientX, mouseEvent.clientY), startWidth, startHeight);
                 break;
             default:
         }
+    }
+
+    function moveCircleTo(x: number, y: number) {
+        let el = document.getElementById("redCircle")!;
+        el.style.position = "absolute";
+        el.style.left = x - 10 + "px";
+        el.style.top = y - 10 + "px";
+    }
+
+    function getNewDegree( mouseX: number, mouseY: number ): number {
+        // figureCenterPositionX - Центр фигуры по X
+        // figureCenterPositionY - Центр фигуры по Y
+
+        // mouseX - Позиция мыши по X
+        // mouseY - Позиция мыши по Y
+        return startDegree + mouseX * 0.5 + mouseY * 0.5;
     }
 
     function onMouseUp(mouseEvent: MouseEvent, cornerNumber: number) {
