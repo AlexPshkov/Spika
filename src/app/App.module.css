@@ -4,9 +4,3 @@
   background-color: #FFFCEF;
   overflow: hidden;
 }
-
-/*TODO Удалить класс круга*/
-.redCircleClass {
-  position: absolute;
-  z-index: 99999;
-}

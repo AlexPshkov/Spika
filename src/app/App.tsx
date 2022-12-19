@@ -99,8 +99,6 @@ function App() {
       <header className="App-header"/>
 
       <PresentationEditor presentation={presentation}/>
-        //TODO Удалить круг
-       <svg className={styles.redCircleClass} id={"redCircle"} height="22" width="22"> <circle cx="11" cy="11" r="10" stroke="black" stroke-width="3" fill="red" /></svg>
     </div>
   );
 }

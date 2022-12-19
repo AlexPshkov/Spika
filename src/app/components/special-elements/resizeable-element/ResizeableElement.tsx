@@ -5,7 +5,7 @@ import resizeIcon from "../../../images/resize.svg";
 import rotateIcon from "../../../images/rotate.svg";
 
 
-function ResizeableElement(content: { element: ReactNode, elementContext: BlockType, transformUpdateFunc: (angle: number, width: number, height: number) => void }) {
+function ResizeableElement(content: { element: ReactNode, elementContext: BlockType, transformUpdateFunc: (angle: number, width: number, height: number) => void, positionUpdateFunc: (x: number, y: number) => void }) {
     let isTaken: boolean = false;
     let dragStartX: number = 0;
     let dragStartY: number = 0;
@@ -33,17 +33,14 @@ function ResizeableElement(content: { element: ReactNode, elementContext: BlockT
         dragStartX = mouseEvent.clientX;
         dragStartY = mouseEvent.clientY;
 
-        startPositionX = 0;
-        startPositionY = 0;
+        startPositionX = content.elementContext.content.position.x;
+        startPositionY = content.elementContext.content.position.y;
 
         const nativeElement = mouseEvent.currentTarget.parentElement?.querySelector("img, span, svg");
         const poses = nativeElement?.getBoundingClientRect()!;
 
         figureCenterPositionX = poses.left + poses.width / 2;
         figureCenterPositionY = poses.top + poses.height / 2;
-
-        //TODO Удалить это
-        moveCircleTo(figureCenterPositionX, figureCenterPositionY);
 
         startWidth = content.elementContext.content.width;
         startHeight = content.elementContext.content.height;
@@ -57,37 +54,32 @@ function ResizeableElement(content: { element: ReactNode, elementContext: BlockT
         mouseEvent.preventDefault();
         if (!isTaken) return;
 
-        const newX = startPositionX - dragStartX + mouseEvent.clientX;
-        const newY = startPositionY - dragStartY + mouseEvent.clientY;
+        const newX = 0 - dragStartX + mouseEvent.clientX;
+        const newY = 0 - dragStartY + mouseEvent.clientY;
 
         switch (cornerNumber) {
             case 1:
+                content.positionUpdateFunc( startPositionX + newX,  startPositionY + newY);
+                content.transformUpdateFunc(startDegree, startWidth - newX, startHeight - newY);
+                break;
             case 2:
+                content.positionUpdateFunc( startPositionX,  startPositionY + newY);
+                content.transformUpdateFunc(startDegree, startWidth + newX, startHeight - newY);
+                break;
             case 3:
+                content.positionUpdateFunc( startPositionX + newX,  startPositionY);
+                content.transformUpdateFunc(startDegree, startWidth - newX, startHeight + newY);
+                break;
             case 4:
                 content.transformUpdateFunc(startDegree, startWidth + newX, startHeight + newY);
                 break;
             case 5:
-                content.transformUpdateFunc(getNewDegree(mouseEvent.clientX, mouseEvent.clientY), startWidth, startHeight);
+                const radians = Math.atan2(mouseEvent.clientX - figureCenterPositionX, mouseEvent.clientY - figureCenterPositionY);
+                const degrees = (radians * (180 / Math.PI) * -1) + 180;
+                content.transformUpdateFunc(degrees, startWidth, startHeight);
                 break;
             default:
         }
-    }
-
-    function moveCircleTo(x: number, y: number) {
-        let el = document.getElementById("redCircle")!;
-        el.style.position = "absolute";
-        el.style.left = x - 10 + "px";
-        el.style.top = y - 10 + "px";
-    }
-
-    function getNewDegree( mouseX: number, mouseY: number ): number {
-        // figureCenterPositionX - Центр фигуры по X
-        // figureCenterPositionY - Центр фигуры по Y
-
-        // mouseX - Позиция мыши по X
-        // mouseY - Позиция мыши по Y
-        return startDegree + mouseX * 0.5 + mouseY * 0.5;
     }
 
     function onMouseUp(mouseEvent: MouseEvent, cornerNumber: number) {
