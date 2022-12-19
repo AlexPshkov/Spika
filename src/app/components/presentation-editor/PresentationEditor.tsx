@@ -11,7 +11,7 @@ function PresentationEditor(content: { presentation: PresentationType }) {
     const [presentation, setPresentation] = useState<PresentationType>(content.presentation);
     const slide = presentation.slides[0];
 
-    function UpdatePresentation( presentation: PresentationType ) {
+    function UpdatePresentation() {
         setPresentation({...presentation});
     }
 
@@ -30,7 +30,7 @@ function PresentationEditor(content: { presentation: PresentationType }) {
                            currentSlideId={presentation.currentSlideId}/>
 
             <div className={styles.horizontal}>
-                <ToolBar presentation={presentation} requireUpdate={presentation => UpdatePresentation(presentation)}/>
+                <ToolBar presentation={presentation} requireUpdate={() => UpdatePresentation()}/>
                 <div className={styles.slideField}>
                     <SlideEditor slide={slide} updateSlide={slide => UpdateSlide(slide)} />
                     <SlidesList name={presentation.name}
@@ -38,7 +38,7 @@ function PresentationEditor(content: { presentation: PresentationType }) {
                                 selection={presentation.selection}
                                 currentSlideId={presentation.currentSlideId}/>
                 </div>
-                <InformationPanel presentation={presentation} requireUpdate={presentation => UpdatePresentation(presentation)}/>
+                <InformationPanel presentation={presentation} requireUpdate={() => UpdatePresentation()}/>
             </div>
 
         </div>

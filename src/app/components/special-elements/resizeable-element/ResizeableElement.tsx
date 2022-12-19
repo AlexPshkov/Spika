@@ -1,6 +1,8 @@
 import React, {ReactNode} from "react";
 import {BlockType} from "../../../OurTypes";
 import styles from "./ResizeableElement.module.css";
+import resizeIcon from "../../../images/resize.svg";
+import rotateIcon from "../../../images/rotate.svg";
 
 
 function ResizeableElement(content: { element: ReactNode, elementContext: BlockType, transformUpdateFunc: (angle: number, width: number, height: number) => void }) {
@@ -72,16 +74,21 @@ function ResizeableElement(content: { element: ReactNode, elementContext: BlockT
     if (content.elementContext.isSelected) {
         contentElement = <div className={styles.transformBlock}>
             {content.element}
-            <div className={styles.topLeftPoint}
-                 onMouseDown={(event) => onMouseDown(event, 1)}/>
-            <div className={styles.topRightPoint}
-                 onMouseDown={(event) => onMouseDown(event, 2)}/>
-            <div className={styles.bottomLeftPoint}
-                 onMouseDown={(event) => onMouseDown(event, 3)}/>
-            <div className={styles.bottomRightPoint}
-                 onMouseDown={(event) => onMouseDown(event, 4)}/>
-            <div className={styles.middleRotate}
-                 onMouseDown={(event) => onMouseDown(event, 5)}/>
+            <img className={styles.topLeftPoint}
+                 onMouseDown={(event) => onMouseDown(event, 1)}
+                 src={resizeIcon} alt={""}/>
+            <img className={styles.topRightPoint}
+                 onMouseDown={(event) => onMouseDown(event, 2)}
+                 src={resizeIcon} alt={""}/>
+            <img className={styles.bottomLeftPoint}
+                 onMouseDown={(event) => onMouseDown(event, 3)}
+                 src={resizeIcon} alt={""}/>
+            <img className={styles.bottomRightPoint}
+                 onMouseDown={(event) => onMouseDown(event, 4)}
+                 src={resizeIcon} alt={""}/>
+            <img className={styles.middleRotate}
+                 onMouseDown={(event) => onMouseDown(event, 5)}
+                 src={rotateIcon} alt={""}/>
         </div>
     }
 

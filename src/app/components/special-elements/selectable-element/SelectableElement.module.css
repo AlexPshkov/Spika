@@ -1,5 +1,5 @@
 .selectedElement > * {
-    border: 3px dotted green;
+    border: 2px solid black;
 }
 
 .nonSelectedElement > * {

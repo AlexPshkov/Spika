@@ -44,13 +44,17 @@
     box-sizing: border-box;
     width: 100%;
 
-    font-size: 1px;
+    font-size: 16px;
 }
 
 .properties div {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
     width: 100%;
-
-    overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis;
+}
+
+.properties div input {
+    width: 100%;
 }

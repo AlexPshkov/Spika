@@ -4,12 +4,12 @@ import Picture from "../base-elements/picture/Picture";
 import Text from "../base-elements/text/Text";
 import Primitive from "../base-elements/primitives/Primitive";
 import MovableElement from "../special-elements/movable-element/MovableElement";
-import {useState} from "react";
 import ResizeableElement from "../special-elements/resizeable-element/ResizeableElement";
 import SelectableElement from "../special-elements/selectable-element/SelectableElement";
 
 function SlideEditor(content: { slide: SlideType, updateSlide: (slide: SlideType) => void } ) {
-    const [slide, setSlide] = useState(content.slide);
+    // const [slide, setSlide] = useState(content.slide);
+    const slide = content.slide;
 
     let style = {
         backgroundColor: slide.background,

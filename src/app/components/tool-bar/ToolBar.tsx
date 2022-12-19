@@ -6,7 +6,7 @@ import imageIcon from "../../images/image.svg"
 import figureIcon from "../../images/figure.svg"
 import newSlideIcon from "../../images/new_slide.svg"
 
-function ToolBar( content: { presentation: PresentationType, requireUpdate: (presentation: PresentationType) => void } ) {
+function ToolBar( content: { presentation: PresentationType, requireUpdate: () => void } ) {
     const currentSlide = (content.presentation.slides.find(slide => { return slide.id === content.presentation.currentSlideId})) || content.presentation.slides[0];
 
     function UnselectBlocks() {
@@ -18,7 +18,7 @@ function ToolBar( content: { presentation: PresentationType, requireUpdate: (pre
 
         ToolManager.CreateFigure(currentSlide);
 
-        content.requireUpdate({...content.presentation});
+        content.requireUpdate();
     }
 
     function CreateText() {
@@ -26,7 +26,7 @@ function ToolBar( content: { presentation: PresentationType, requireUpdate: (pre
 
         ToolManager.CreateText(currentSlide);
 
-        content.requireUpdate({...content.presentation});
+        content.requireUpdate();
     }
 
     function CreateImage() {
@@ -34,13 +34,13 @@ function ToolBar( content: { presentation: PresentationType, requireUpdate: (pre
 
         ToolManager.CreateImage(currentSlide);
 
-        content.requireUpdate({...content.presentation});
+        content.requireUpdate();
     }
 
     function CreateSlide() {
          ToolManager.CreateSlide(content.presentation);
 
-        content.requireUpdate({...content.presentation});
+        content.requireUpdate();
     }
 
     return (
