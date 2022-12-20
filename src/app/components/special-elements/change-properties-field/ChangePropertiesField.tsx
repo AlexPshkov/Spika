@@ -39,7 +39,7 @@ function ChangePropertiesField(content: { name: string, type: "number" | "string
                     }
                     break;
                 case "picture":
-                    elem.content.url = value;
+                    if (content.name === "url") elem.content.url = value;
                     break;
                 case "primitive":
                     switch (content.name) {
