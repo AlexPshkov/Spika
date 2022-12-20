@@ -68,7 +68,8 @@ function SlideEditor(content: { slide: SlideType, updateSlide: (slide: SlideType
                                                     positionUpdateFunc={(x, y) => UpdateElementPosition(blockType, x, y)}/>;
         const resizeableElement: any = <ResizeableElement element={movableElement}
                                                           elementContext={blockType}
-                                                          transformUpdateFunc={(angle, width, height) => UpdateElementTransform(blockType, angle, width, height)}/>
+                                                          transformUpdateFunc={(angle, width, height) => UpdateElementTransform(blockType, angle, width, height)}
+                                                          positionUpdateFunc={(x, y) => UpdateElementPosition(blockType, x, y)}/>
 
         return resizeableElement;
     }
