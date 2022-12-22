@@ -2,22 +2,49 @@ import styles from "./InformationPanel.module.css"
 import {BlockType, PresentationType, SlideType} from "../../OurTypes";
 import ChangePropertiesField from "../special-elements/change-properties-field/ChangePropertiesField";
 import ChangePropertiesButton from "../special-elements/change-properties-button/ChangePropertiesButton";
+import {useState} from "react";
 
 function InformationPanel( content: { presentation: PresentationType, requireUpdate: () => void }) {
-    const currentSlide = (content.presentation.slides.find(slide => {
-        return slide.id === content.presentation.currentSlideId
-    })) || content.presentation.slides[0];
-    const selectedBlocks: BlockType[] = [];
+    const [presentation, setSlides] = useState<PresentationType>({...content.presentation});
+    const slides: SlideType[] = presentation.slides;
 
-    currentSlide.blocks.forEach( block => {
-        if ( block.isSelected ) selectedBlocks.push(block)
-    });
+    const textFields = [
+        {key: "symbols", value: "Содержание"},
+        {key: "fontFamily", value: "Шрифт"},
+        {key: "fontSize", value: "Размер шрифта"},
+        {key: "fontColor", value: "Цвет шрифта"}
+    ]
+    const pictureFields = [
+        {key: "url", value: "Путь"}
+    ]
+    const primitiveFields = [
+        {key: "style", value: "Тип фигуры"},
+        {key: "backgroundColor", value: "Цвет фигуры"},
+        {key: "borderSize", value: "Размер обводки"},
+        {key: "borderColor", value: "Цвет обводки"}
+    ]
+    const universalFields = [
+        {key: "position", value: "Позиция"},
+        {key: "width", value: "Ширина"},
+        {key: "height", value: "Высота"},
+        {key: "angle", value: "Поворот"}
+    ]
+    const primitiveStyles = ["ellipse", "triangle", "rectangle"]
+
+    function globalUpdate() {
+        content.presentation.slides = slides;
+        content.requireUpdate();
+    }
+
+    function localUpdate() {
+        setSlides({...presentation});
+    }
 
     function createSlideProperties(): any {
         const selectedSlides: SlideType[] = [];
         let slidesProperties: any = <></>;
 
-        content.presentation.slides.forEach(slide => {
+        slides.forEach(slide => {
             if ( slide.isSelected ) selectedSlides.push(slide)
         });
 
@@ -36,104 +63,31 @@ function InformationPanel( content: { presentation: PresentationType, requireUpd
     }
 
     function createBlockProperties(): any {
+        const currentSlide = (slides.find(slide => {return slide.id === content.presentation.currentSlideId})) || slides[0];
+        const selectedBlocks: BlockType[] = [];
+
+        currentSlide.blocks.forEach( block => {
+            if ( block.isSelected ) selectedBlocks.push(block)
+        });
+
         let blocksProperties: any = <></>;
         let blockProps: any = <></>;
 
         if (selectedBlocks.length) {
-            const blockStyle = getBlockStyle(selectedBlocks);
-
-            if (blockStyle !== "universal") {
+            const similarBlockValues = getSimilarValues(selectedBlocks);
+            if (similarBlockValues.includes("type")) {
                 switch (selectedBlocks[0].content.type) {
                     case "text":
-                        blockProps = (
-                            <>
-                                <div>Содержание:
-                                    <ChangePropertiesField name={"symbols"}
-                                                           type={"string"}
-                                                           value={(selectedBlocks.length === 1) ? selectedBlocks[0].content.symbols : ""}
-                                                           elems={selectedBlocks}
-                                                           requireUpdate={content.requireUpdate}/>
-                                </div>
-                                <div>Шрифт:
-                                    <ChangePropertiesField name={"fontFamily"}
-                                                           type={"string"}
-                                                           value={(selectedBlocks.length === 1) ? selectedBlocks[0].content.fontFamily : ""}
-                                                           elems={selectedBlocks}
-                                                           requireUpdate={content.requireUpdate}/>
-                                </div>
-                                <div>Размер шрифта:
-                                    <ChangePropertiesField name={"fontSize"}
-                                                           type={"number"}
-                                                           value={(selectedBlocks.length === 1) ? selectedBlocks[0].content.fontSize.toString() : ""}
-                                                           elems={selectedBlocks}
-                                                           requireUpdate={content.requireUpdate}/>
-                                </div>
-                                <div>Цвет шрифта:
-                                    <ChangePropertiesField name={"fontColor"}
-                                                           type={"string"}
-                                                           value={(selectedBlocks.length === 1) ? selectedBlocks[0].content.fontColor : ""}
-                                                           elems={selectedBlocks}
-                                                           requireUpdate={content.requireUpdate}/>
-                                </div>
-                            </>
-                        );
+                        blockProps = textFields.map(({key, value}) =>
+                            visualizeProperty(key, value, selectedBlocks, similarBlockValues))
                         break;
                     case "picture":
-                        blockProps = (
-                            <>
-                                <div>Путь:
-                                    <ChangePropertiesField name={"url"}
-                                                           type={"string"}
-                                                           value={(selectedBlocks.length === 1) ? selectedBlocks[0].content.url : ""}
-                                                           elems={selectedBlocks}
-                                                           requireUpdate={content.requireUpdate}/>
-                                </div>
-                            </>
-                        )
+                        blockProps = pictureFields.map(({key, value}) =>
+                            visualizeProperty(key, value, selectedBlocks, similarBlockValues))
                         break;
                     case "primitive":
-                        blockProps = (
-                            <>
-                                <div>Тип фигуры:
-                                    <ChangePropertiesButton name={"style"}
-                                                            value={"ellipse"}
-                                                            currentStyle={(selectedBlocks.length === 1) ? selectedBlocks[0].content.style : null}
-                                                            elems={selectedBlocks}
-                                                            requireUpdate={content.requireUpdate}/>
-                                    <ChangePropertiesButton name={"style"}
-                                                            value={"triangle"}
-                                                            currentStyle={(selectedBlocks.length === 1) ? selectedBlocks[0].content.style : null}
-                                                            elems={selectedBlocks}
-                                                            requireUpdate={content.requireUpdate}/>
-                                    <ChangePropertiesButton name={"style"}
-                                                            value={"rectangle"}
-                                                            currentStyle={(selectedBlocks.length === 1) ? selectedBlocks[0].content.style : null}
-                                                            elems={selectedBlocks}
-                                                            requireUpdate={content.requireUpdate}/>
-                                </div>
-                                <div>Цвет фигуры:
-                                    <ChangePropertiesField name={"backgroundColor"}
-                                                           type={"string"}
-                                                           value={(selectedBlocks.length === 1) ? selectedBlocks[0].content.backgroundColor : ""}
-                                                           elems={selectedBlocks}
-                                                           requireUpdate={content.requireUpdate}/>
-                                </div>
-                                <div>Размер обводки:
-                                    <ChangePropertiesField name={"borderSize"}
-                                                           type={"number"}
-                                                           value={(selectedBlocks.length === 1) ? selectedBlocks[0].content.borderSize.toString() : ""}
-                                                           elems={selectedBlocks}
-                                                           requireUpdate={content.requireUpdate}/>
-                                </div>
-                                <div>Цвет обводки:
-                                    <ChangePropertiesField name={"borderColor"}
-                                                           type={"string"}
-                                                           value={(selectedBlocks.length === 1) ? selectedBlocks[0].content.borderColor : ""}
-                                                           elems={selectedBlocks}
-                                                           requireUpdate={content.requireUpdate}/>
-                                </div>
-                            </>
-                        )
+                        blockProps = primitiveFields.map(({key, value}) =>
+                            visualizeProperty(key, value, selectedBlocks, similarBlockValues))
                         break;
                 }
             }
@@ -142,39 +96,7 @@ function InformationPanel( content: { presentation: PresentationType, requireUpd
             <div className={styles.propertiesContainer}>
                 <div className={styles.propertiesTitle}>{(selectedBlocks.length === 1) ? "Свойства блока" : "Свойства блоков"}</div>
                 <div className={styles.properties}>
-                    <div>Позиция:
-                        <ChangePropertiesField name={"positionX"}
-                                               type={"number"}
-                                               value={(selectedBlocks.length === 1) ? selectedBlocks[0].content.position.x.toString() : ""}
-                                               elems={selectedBlocks}
-                                               requireUpdate={content.requireUpdate}/>
-                        <ChangePropertiesField name={"positionY"}
-                                               type={"number"}
-                                               value={(selectedBlocks.length === 1) ? selectedBlocks[0].content.position.y.toString() : ""}
-                                               elems={selectedBlocks}
-                                               requireUpdate={content.requireUpdate}/>
-                    </div>
-                    <div>Ширина:
-                        <ChangePropertiesField name={"width"}
-                                               type={"number"}
-                                               value={(selectedBlocks.length === 1) ? selectedBlocks[0].content.width.toString() : ""}
-                                               elems={selectedBlocks}
-                                               requireUpdate={content.requireUpdate}/>
-                    </div>
-                    <div>Высота:
-                        <ChangePropertiesField name={"height"}
-                                               type={"number"}
-                                               value={(selectedBlocks.length === 1) ? selectedBlocks[0].content.height.toString() : ""}
-                                               elems={selectedBlocks}
-                                               requireUpdate={content.requireUpdate}/>
-                    </div>
-                    <div>Поворот:
-                        <ChangePropertiesField name={"angle"}
-                                               type={"number"}
-                                               value={(selectedBlocks.length === 1) ? selectedBlocks[0].content.position.angle.toString() : ""}
-                                               elems={selectedBlocks}
-                                               requireUpdate={content.requireUpdate}/>
-                    </div>
+                    {universalFields.map(({key, value}) => visualizeProperty(key, value, selectedBlocks, similarBlockValues))}
                     {blockProps}
                 </div>
             </div>)
@@ -182,22 +104,85 @@ function InformationPanel( content: { presentation: PresentationType, requireUpd
         return {...blocksProperties};
     }
 
-    function getBlockStyle( blocks: BlockType[] ) {
-        const selectedBlocksTypes: string[] = [];
+    function visualizeProperty(type: string, name: string, blocks: BlockType[], similarBlockValues: string[]) {
+        return (
+            <div>{name}:
+                {(type === "style") ?
+                    primitiveStyles.map(style =>
+                        visualizeButton(style as "ellipse" | "triangle" | "rectangle", blocks, similarBlockValues))
+                    : (type === "position") ?
+                        ["x", "y"].map(value => visualizeField(value, blocks, similarBlockValues))
+                        : visualizeField(type, blocks, similarBlockValues)}
+            </div>)
+    }
 
-        blocks.forEach( block => {
-            selectedBlocksTypes.push(block.content.type)
-        });
+    function visualizeField(type: string, blocks: BlockType[], similarBlockValues: string[]) {
+        let value: any;
+        if (["x", "y", "angle"].indexOf(type) >= 0) {
+            // @ts-ignore
+            value = blocks[0].content.position[type];
+        } else {
+            // @ts-ignore
+            value = blocks[0].content[type];
+        }
 
-        let similarBlocks = true;
+        return(
+            <ChangePropertiesField name={type}
+                                   type={(typeof value) as "string" | "number"}
+                                   value={similarBlockValues.includes(type) ? value : ""}
+                                   elems={blocks}
+                                   localUpdate={() => localUpdate()}
+                                   globalUpdate={() => globalUpdate()}/>
+        )
+    }
 
-        selectedBlocksTypes.forEach(blockType => {
-            if (selectedBlocksTypes[0] !== blockType) return similarBlocks = false
-        });
+    function visualizeButton(style: "ellipse" | "triangle" | "rectangle", blocks: BlockType[], similarBlockValue: string[]) {
+        const currentStyle = blocks[0].content.type === "primitive" ? blocks[0].content.style : null
+        return(
+            <ChangePropertiesButton name={"style"}
+                                    value={style}
+                                    currentStyle={similarBlockValue.includes("style") ? currentStyle : null}
+                                    elems={blocks}
+                                    requireUpdate={() => globalUpdate()}/>
+        )
+    }
 
-        if (similarBlocks) return selectedBlocksTypes[0];
+    function getSimilarValues( blocks: BlockType[]) {
+        const similarValues: string[] = [];
 
-        return "universal"
+        for (let key in blocks[0].content) {
+            if (key === "position") {
+                for (let supKey in blocks[0].content[key]) {
+                    similarValues.push(supKey)
+                }
+            } else {
+                similarValues.push(key)
+            }
+        }
+
+        if (blocks.length > 1) {
+            for (let key in blocks[0].content) {
+                for (let i = 1; i < blocks.length; i++) {
+                    if (key === "position") {
+                        for (let supKey in blocks[0].content[key]) {
+                            // @ts-ignore
+                            if (similarValues.includes(supKey) && blocks[0].content[key][supKey] !== blocks[i].content[key][supKey]) {
+                                similarValues.splice(similarValues.indexOf(supKey), 1)
+                            }
+                        }
+                    } else {
+                        if (similarValues.includes(key) && key in blocks[i].content) {
+                            // @ts-ignore
+                            if (blocks[0].content[key] !== blocks[i].content[key]) {
+                                similarValues.splice(similarValues.indexOf(key), 1)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return similarValues;
     }
 
     return (<div className={styles.informationPanel}>
