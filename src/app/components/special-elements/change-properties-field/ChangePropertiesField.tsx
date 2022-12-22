@@ -1,69 +1,63 @@
 import {BlockType} from "../../../OurTypes";
+import React from "react";
 
 
-function ChangePropertiesField(content: { name: string, type: "number" | "string", value: string, elems: BlockType[], requireUpdate: () => void }) {
-    function updateProperties( value: string) {
+function ChangePropertiesField(content: { name: string, type: "number" | "string", value: string, elems: BlockType[], localUpdate: () => void, globalUpdate: () => void }) {
+    function onKeyDownHandler( keyEvent: React.KeyboardEvent<HTMLInputElement>) {
+        if (keyEvent.key === 'Enter') content.globalUpdate();
+    }
+
+    function updateProperties( value: string ) {
         content.elems.forEach(elem => {
             switch (content.name) {
-                case "positionX":
-                    elem.content.position.x = Number(value);
-                    break;
-                case "positionY":
-                    elem.content.position.y = Number(value);
+                case "x":
+                case "y":
+                case "angle":
+                    elem.content.position[content.name] = Number(value);
                     break;
                 case "width":
-                    elem.content.width = Number(value);
-                    break;
                 case "height":
-                    elem.content.height = Number(value);
-                    break;
-                case "angle":
-                    elem.content.position.angle = Number(value);
+                    elem.content[content.name] = Number(value);
                     break;
             }
             switch (elem.content.type) {
                 case "text":
                     switch (content.name) {
                         case "symbols":
-                            elem.content.symbols = value;
-                            break;
                         case "fontFamily":
-                            elem.content.fontFamily = value;
+                        case "fontColor":
+                            elem.content[content.name] = value;
                             break;
                         case "fontSize":
-                            elem.content.fontSize = Number(value);
-                            break;
-                        case "fontColor":
-                            elem.content.fontColor = value;
+                            elem.content[content.name] = Number(value);
                             break;
                     }
                     break;
                 case "picture":
-                    if (content.name === "url") elem.content.url = value;
+                    if (content.name === "url") elem.content[content.name] = value;
                     break;
                 case "primitive":
                     switch (content.name) {
                         case "backgroundColor":
-                            elem.content.backgroundColor = value;
+                        case "borderColor":
+                            elem.content[content.name] = value;
                             break;
                         case "borderSize":
-                            elem.content.borderSize = Number(value);
-                            break;
-                        case "borderColor":
-                            elem.content.borderColor = value;
+                            elem.content[content.name] = Number(value);
                             break;
                     }
                     break;
             }
         })
-        content.requireUpdate();
+        content.localUpdate();
     }
 
 
     return <input name={content.name}
                   type={content.type}
                   value={content.value}
-                  onChange={(event) => updateProperties( event.target.value )}/>
+                  onChange={(event) => updateProperties( event.target.value )}
+                  onKeyDown={(event) => onKeyDownHandler(event)}/>
 }
 
 export default ChangePropertiesField;
