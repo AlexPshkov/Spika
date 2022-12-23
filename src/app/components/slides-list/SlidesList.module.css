@@ -7,7 +7,6 @@
 
     gap: 10px;
 
-    width: fit-content;
     max-width: 80%;
     height: 145px;
     box-sizing: content-box;
@@ -25,5 +24,9 @@
 }
 
 .selectedSlide {
-    box-shadow: 0 0 4px 3px rgba(255, 138, 0, 0.5);
+    box-shadow: inset 0 0 18px 9px rgb(255 138 0 / 50%);
+}
+
+.currentSlide {
+    box-shadow: 0 0 16px 6px rgb(255 71 0 / 50%);
 }

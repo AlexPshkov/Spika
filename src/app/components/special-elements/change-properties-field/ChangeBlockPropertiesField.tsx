@@ -2,7 +2,7 @@ import {BlockType} from "../../../OurTypes";
 import React from "react";
 
 
-function ChangePropertiesField(content: { name: string, type: "number" | "string", value: string, elems: BlockType[], localUpdate: () => void, globalUpdate: () => void }) {
+function ChangeBlockPropertiesField(content: { name: string, type: "number" | "string", value: string, elems: BlockType[], localUpdate: () => void, globalUpdate: () => void }) {
     function onKeyDownHandler( keyEvent: React.KeyboardEvent<HTMLInputElement>) {
         if (keyEvent.key === 'Enter') content.globalUpdate();
     }
@@ -60,4 +60,4 @@ function ChangePropertiesField(content: { name: string, type: "number" | "string
                   onKeyDown={(event) => onKeyDownHandler(event)}/>
 }
 
-export default ChangePropertiesField;
+export default ChangeBlockPropertiesField;

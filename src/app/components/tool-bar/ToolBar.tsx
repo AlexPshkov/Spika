@@ -5,6 +5,7 @@ import textIcon from "../../images/text.svg"
 import imageIcon from "../../images/image.svg"
 import figureIcon from "../../images/figure.svg"
 import newSlideIcon from "../../images/new_slide.svg"
+import deleteBlocksIcon from "../../images/delete_block.svg"
 
 function ToolBar( content: { presentation: PresentationType, requireUpdate: () => void } ) {
     const currentSlide = (content.presentation.slides.find(slide => { return slide.id === content.presentation.currentSlideId})) || content.presentation.slides[0];
@@ -43,6 +44,16 @@ function ToolBar( content: { presentation: PresentationType, requireUpdate: () =
         content.requireUpdate();
     }
 
+    function DeleteBlocks() {
+        currentSlide.blocks.forEach(block => {
+            if (block.isSelected) {
+                currentSlide.blocks = currentSlide.blocks.filter(elem => elem.id !== block.id)
+            }
+        });
+
+        content.requireUpdate();
+    }
+
     return (
         <div className={styles.toolBar}>
             <div className={styles.tool} title={"Добавить текст на слайд"} onClick={CreateText}><img src={textIcon} alt={"Text"}/></div>
@@ -50,6 +61,7 @@ function ToolBar( content: { presentation: PresentationType, requireUpdate: () =
             {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
             <div className={styles.tool} title={"Добавить картинку на слайд"} onClick={CreateImage}><img src={imageIcon} alt={"Image"}/></div>
             <div className={styles.tool} title={"Создать новый слайд"} onClick={CreateSlide}><img src={newSlideIcon} alt={"New slide"}/></div>
+            <div className={styles.tool} title={"Удалить выбранные элементы слайда"} onClick={DeleteBlocks}><img src={deleteBlocksIcon} alt={"Delete Blocks"}/></div>
         </div>
     );
 }

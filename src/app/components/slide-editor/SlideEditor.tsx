@@ -7,42 +7,38 @@ import MovableElement from "../special-elements/movable-element/MovableElement";
 import ResizeableElement from "../special-elements/resizeable-element/ResizeableElement";
 import SelectableElement from "../special-elements/selectable-element/SelectableElement";
 
-function SlideEditor(content: { slide: SlideType, updateSlide: (slide: SlideType) => void } ) {
-    // const [slide, setSlide] = useState(content.slide);
+function SlideEditor(content: { slide: SlideType, updatePresentation: () => void } ) {
     const slide = content.slide;
 
     let style = {
-        backgroundColor: slide.background,
+        background: slide.background,
         width: slide.resolution.width,
         height: slide.resolution.height
     }
 
-    function UpdateElementPosition(block: BlockType, x: number, y: number) {
+    function updateElementPosition(block: BlockType, x: number, y: number) {
         block.content.position.x = x;
         block.content.position.y = y;
 
-        // setSlide({...content.slide});
-        content.updateSlide({...slide});
+        content.updatePresentation();
     }
 
-    function UpdateElementSelect(block: BlockType, isSelected: boolean) {
+    function updateElementSelect(block: BlockType, isSelected: boolean) {
         block.isSelected = isSelected;
 
-        // setSlide({...content.slide});
-        content.updateSlide({...slide});
+        content.updatePresentation();
     }
 
-    function UpdateElementTransform(block: BlockType, angle: number, width: number, height: number ) {
+    function updateElementTransform(block: BlockType, angle: number, width: number, height: number ) {
         block.content.position.angle = angle;
         block.content.width = width;
         block.content.height = height;
 
-        // setSlide({...content.slide});
-        content.updateSlide({...slide});
+        content.updatePresentation();
     }
 
 
-    function GetBlock( blockType: BlockType ): any {
+    function getBlock( blockType: BlockType ): any {
         const content = blockType.content;
 
         switch (content.type) {
@@ -57,26 +53,26 @@ function SlideEditor(content: { slide: SlideType, updateSlide: (slide: SlideType
         }
     }
 
-    function VisualizeBlock( blockType: BlockType ): any {
-        const simpleElement: any = GetBlock(blockType);
+    function visualizeBlock( blockType: BlockType ): any {
+        const simpleElement: any = getBlock(blockType);
 
         const selectableElement: any = <SelectableElement element={simpleElement}
                                                           elementContext={blockType}
-                                                          selectUpdateFunc={(isSelected) => UpdateElementSelect(blockType, isSelected)}/>
+                                                          selectUpdateFunc={(isSelected) => updateElementSelect(blockType, isSelected)}/>
         const movableElement: any = <MovableElement element={selectableElement}
                                                     elementPosition={blockType.content.position}
-                                                    positionUpdateFunc={(x, y) => UpdateElementPosition(blockType, x, y)}/>;
+                                                    positionUpdateFunc={(x, y) => updateElementPosition(blockType, x, y)}/>;
         const resizeableElement: any = <ResizeableElement element={movableElement}
                                                           elementContext={blockType}
-                                                          transformUpdateFunc={(angle, width, height) => UpdateElementTransform(blockType, angle, width, height)}
-                                                          positionUpdateFunc={(x, y) => UpdateElementPosition(blockType, x, y)}/>
+                                                          transformUpdateFunc={(angle, width, height) => updateElementTransform(blockType, angle, width, height)}
+                                                          positionUpdateFunc={(x, y) => updateElementPosition(blockType, x, y)}/>
 
         return resizeableElement;
     }
 
     return (
-        <div className={styles.slideEditor} style={style}>
-            {slide.blocks.map(x => VisualizeBlock(x))}
+        <div className={styles.slideEditor} style={style} >
+            {slide.blocks.map(x => visualizeBlock(x))}
         </div>
     );
 }

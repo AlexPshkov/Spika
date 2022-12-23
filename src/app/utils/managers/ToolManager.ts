@@ -14,7 +14,7 @@ export class ToolManager{
 
     static CreateFigure( slide: SlideType ) {
         const Block: BlockType = {
-            id: ToolManager.GetMaxId( slide.blocks ),
+            id: ToolManager.GetMaxId( slide.blocks ) + 1,
             isSelected: true,
             content: {
                 type: "primitive",
@@ -37,7 +37,7 @@ export class ToolManager{
 
     static CreateText( slide: SlideType ) {
             const Block: BlockType = {
-            id: ToolManager.GetMaxId( slide.blocks ),
+            id: ToolManager.GetMaxId( slide.blocks ) + 1,
             isSelected: true,
             content: {
                 type: "text",
@@ -60,7 +60,7 @@ export class ToolManager{
 
     static CreateImage( slide: SlideType ) {
         const Block: BlockType = {
-            id: ToolManager.GetMaxId( slide.blocks ),
+            id: ToolManager.GetMaxId( slide.blocks ) + 1,
             isSelected: true,
             content: {
                 type: "picture",
@@ -80,7 +80,7 @@ export class ToolManager{
 
     static CreateSlide( presentation: PresentationType ) {
         const Slide: SlideType = {
-            id: ToolManager.GetMaxId(presentation.slides),
+            id: ToolManager.GetMaxId(presentation.slides) + 1,
             blocks: [],
             background: "white",
             resolution: {

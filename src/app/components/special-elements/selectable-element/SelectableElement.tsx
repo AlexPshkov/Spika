@@ -9,14 +9,6 @@ function SelectableElement(content: { element: ReactNode, elementContext: BlockT
         content.selectUpdateFunc(!content.elementContext.isSelected);
     }
 
-    function onMouseDownAwayHandler(mouseEvent: MouseEvent) {
-        // document.removeEventListener("mousedown", (event) => onMouseDownAwayHandler(event) );
-
-        // content.selectUpdateFunc(false);
-    }
-
-
-
     return (
         <div onMouseDown={(event) => onMouseDownHandler(event)}
              className={content.elementContext.isSelected ? styles.selectedElement : styles.nonSelectedElement}>

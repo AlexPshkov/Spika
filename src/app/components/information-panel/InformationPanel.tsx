@@ -1,13 +1,15 @@
 import styles from "./InformationPanel.module.css"
 import {BlockType, PresentationType, SlideType} from "../../OurTypes";
-import ChangePropertiesField from "../special-elements/change-properties-field/ChangePropertiesField";
-import ChangePropertiesButton from "../special-elements/change-properties-button/ChangePropertiesButton";
 import {useState} from "react";
+import ChangeBlockPropertiesField from "../special-elements/change-properties-field/ChangeBlockPropertiesField";
+import ChangeBlockPropertiesButton from "../special-elements/change-properties-button/ChangeBlockPropertiesButton";
+import ChangeSlidePropertiesField from "../special-elements/change-properties-field/ChangeSlidePropertiesField";
 
 function InformationPanel( content: { presentation: PresentationType, requireUpdate: () => void }) {
     const [presentation, setSlides] = useState<PresentationType>({...content.presentation});
     const slides: SlideType[] = presentation.slides;
 
+    // Blocks
     const textFields = [
         {key: "symbols", value: "Содержание"},
         {key: "fontFamily", value: "Шрифт"},
@@ -31,6 +33,12 @@ function InformationPanel( content: { presentation: PresentationType, requireUpd
     ]
     const primitiveStyles = ["ellipse", "triangle", "rectangle"]
 
+    // Slides
+    const slideFields = [
+        {key: "resolution", value: "Размер"},
+        {key: "background", value: "Фон"}
+    ]
+
     function globalUpdate() {
         content.presentation.slides = slides;
         content.requireUpdate();
@@ -42,24 +50,25 @@ function InformationPanel( content: { presentation: PresentationType, requireUpd
 
     function createSlideProperties(): any {
         const selectedSlides: SlideType[] = [];
-        let slidesProperties: any = <></>;
+        let slidesProperties: any;
 
         slides.forEach(slide => {
             if ( slide.isSelected ) selectedSlides.push(slide)
         });
 
         if (selectedSlides.length) {
+            const similarSlideValues = getSimilarValuesOfSlides(selectedSlides);
             slidesProperties = (
                 <div className={styles.propertiesContainer}>
                     <div className={styles.propertiesTitle}>{(selectedSlides.length === 1) ? "Свойства слайда" : "Свойства слайдов"}</div>
                     <div className={styles.properties}>
-                        <div>Размер: {(selectedSlides.length === 1) ? selectedSlides[0].resolution.width + " " + selectedSlides[0].resolution.height : ""}</div>
-                        <div>Фон: {(selectedSlides.length === 1) ? selectedSlides[0].background : ""}</div>
+                        {slideFields.map(({key, value}) => visualizeSlideProperty(key, value, selectedSlides, similarSlideValues))}
                     </div>
                 </div>
             )
+
+            return {...slidesProperties}
         }
-        return {...slidesProperties}
     }
 
     function createBlockProperties(): any {
@@ -70,24 +79,24 @@ function InformationPanel( content: { presentation: PresentationType, requireUpd
             if ( block.isSelected ) selectedBlocks.push(block)
         });
 
-        let blocksProperties: any = <></>;
-        let blockProps: any = <></>;
+        let blocksProperties: any;
+        let blockProps: any;
 
         if (selectedBlocks.length) {
-            const similarBlockValues = getSimilarValues(selectedBlocks);
-            if (similarBlockValues.includes("type")) {
+            const similarBlockValues = getSimilarValuesOfBlocks(selectedBlocks);
+            if (similarBlockValues.has("type")) {
                 switch (selectedBlocks[0].content.type) {
                     case "text":
                         blockProps = textFields.map(({key, value}) =>
-                            visualizeProperty(key, value, selectedBlocks, similarBlockValues))
+                            visualizeBlockProperty(key, value, selectedBlocks, similarBlockValues))
                         break;
                     case "picture":
                         blockProps = pictureFields.map(({key, value}) =>
-                            visualizeProperty(key, value, selectedBlocks, similarBlockValues))
+                            visualizeBlockProperty(key, value, selectedBlocks, similarBlockValues))
                         break;
                     case "primitive":
                         blockProps = primitiveFields.map(({key, value}) =>
-                            visualizeProperty(key, value, selectedBlocks, similarBlockValues))
+                            visualizeBlockProperty(key, value, selectedBlocks, similarBlockValues))
                         break;
                 }
             }
@@ -96,28 +105,82 @@ function InformationPanel( content: { presentation: PresentationType, requireUpd
             <div className={styles.propertiesContainer}>
                 <div className={styles.propertiesTitle}>{(selectedBlocks.length === 1) ? "Свойства блока" : "Свойства блоков"}</div>
                 <div className={styles.properties}>
-                    {universalFields.map(({key, value}) => visualizeProperty(key, value, selectedBlocks, similarBlockValues))}
+                    {universalFields.map(({key, value}) => visualizeBlockProperty(key, value, selectedBlocks, similarBlockValues))}
                     {blockProps}
                 </div>
             </div>)
+
+            return {...blocksProperties};
         }
-        return {...blocksProperties};
     }
 
-    function visualizeProperty(type: string, name: string, blocks: BlockType[], similarBlockValues: string[]) {
-        return (
+    function visualizeSlideProperty(type: string, name: string, slides: SlideType[], similarSlideValues: Set<string>) {
+        let content;
+
+        if (type === "resolution") {
+            content = ["width", "height"].map(value => visualizeSlidePropField(value, slides, similarSlideValues))
+        } else {
+            content = visualizeSlidePropField(type, slides, similarSlideValues)
+        }
+
+        return(
             <div>{name}:
-                {(type === "style") ?
-                    primitiveStyles.map(style =>
-                        visualizeButton(style as "ellipse" | "triangle" | "rectangle", blocks, similarBlockValues))
-                    : (type === "position") ?
-                        ["x", "y"].map(value => visualizeField(value, blocks, similarBlockValues))
-                        : visualizeField(type, blocks, similarBlockValues)}
-            </div>)
+                {content}
+            </div>
+        )
     }
 
-    function visualizeField(type: string, blocks: BlockType[], similarBlockValues: string[]) {
+    function visualizeSlidePropField(type: string, slides: SlideType[], similarSlideValues: Set<string>) {
         let value: any;
+
+        if (["width", "height"].indexOf(type) >= 0) {
+            // @ts-ignore
+            value = slides[0].resolution[type];
+        } else {
+            // @ts-ignore
+            value = slides[0][type];
+        }
+
+        return(
+            <ChangeSlidePropertiesField name={type}
+                                        type={(typeof value) as "string" | "number"}
+                                        value={similarSlideValues.has(type) ? value : ""}
+                                        elems={slides}
+                                        localUpdate={() => localUpdate()}
+                                        globalUpdate={() => globalUpdate()}/>
+        )
+    }
+
+    function visualizeBlockProperty(type: string, name: string, blocks: BlockType[], similarBlockValues: Set<string>) {
+        let content;
+
+        switch (type) {
+            case "style":
+                content = primitiveStyles.map(style => visualizeBlockPropButton(
+                    style as "ellipse" | "triangle" | "rectangle",
+                    blocks,
+                    similarBlockValues
+                ))
+                break;
+            case "position":
+                content = ["x", "y"].map(value => visualizeBlockPropField(
+                    value,
+                    blocks,
+                    similarBlockValues
+                ))
+                break;
+            default:
+                content = visualizeBlockPropField(type, blocks, similarBlockValues)
+        }
+
+        return(
+            <div>{name}:{content}</div>
+        )
+    }
+
+    function visualizeBlockPropField(type: string, blocks: BlockType[], similarBlockValues: Set<string>) {
+        let value: any;
+
         if (["x", "y", "angle"].indexOf(type) >= 0) {
             // @ts-ignore
             value = blocks[0].content.position[type];
@@ -127,54 +190,93 @@ function InformationPanel( content: { presentation: PresentationType, requireUpd
         }
 
         return(
-            <ChangePropertiesField name={type}
-                                   type={(typeof value) as "string" | "number"}
-                                   value={similarBlockValues.includes(type) ? value : ""}
-                                   elems={blocks}
-                                   localUpdate={() => localUpdate()}
-                                   globalUpdate={() => globalUpdate()}/>
+            <ChangeBlockPropertiesField name={type}
+                                        type={(typeof value) as "string" | "number"}
+                                        value={similarBlockValues.has(type) ? value : ""}
+                                        elems={blocks}
+                                        localUpdate={() => localUpdate()}
+                                        globalUpdate={() => globalUpdate()}/>
         )
     }
 
-    function visualizeButton(style: "ellipse" | "triangle" | "rectangle", blocks: BlockType[], similarBlockValue: string[]) {
+    function visualizeBlockPropButton(style: "ellipse" | "triangle" | "rectangle", blocks: BlockType[], similarBlockValue: Set<string>) {
         const currentStyle = blocks[0].content.type === "primitive" ? blocks[0].content.style : null
+
         return(
-            <ChangePropertiesButton name={"style"}
-                                    value={style}
-                                    currentStyle={similarBlockValue.includes("style") ? currentStyle : null}
-                                    elems={blocks}
-                                    requireUpdate={() => globalUpdate()}/>
+            <ChangeBlockPropertiesButton name={"style"}
+                                         value={style}
+                                         currentStyle={similarBlockValue.has("style") ? currentStyle : null}
+                                         elems={blocks}
+                                         requireUpdate={() => globalUpdate()}/>
         )
     }
 
-    function getSimilarValues( blocks: BlockType[]) {
-        const similarValues: string[] = [];
+    function getSimilarValuesOfSlides( elems: SlideType[] ) {
+        const similarValues = new Set<string>();
 
-        for (let key in blocks[0].content) {
-            if (key === "position") {
-                for (let supKey in blocks[0].content[key]) {
-                    similarValues.push(supKey)
+        for (let key in elems[0]) {
+            if (key === "resolution") {
+                for (let supKey in elems[0][key]) {
+                    similarValues.add(supKey)
                 }
             } else {
-                similarValues.push(key)
+                similarValues.add(key)
             }
         }
 
-        if (blocks.length > 1) {
-            for (let key in blocks[0].content) {
-                for (let i = 1; i < blocks.length; i++) {
-                    if (key === "position") {
-                        for (let supKey in blocks[0].content[key]) {
+        if (elems.length > 1) {
+            for (let key in elems[0]) {
+                for (let i = 1; i < elems.length; i++) {
+                    if (key === "resolution") {
+                        for (let supKey in elems[0][key]) {
                             // @ts-ignore
-                            if (similarValues.includes(supKey) && blocks[0].content[key][supKey] !== blocks[i].content[key][supKey]) {
-                                similarValues.splice(similarValues.indexOf(supKey), 1)
+                            if (similarValues.has(supKey) && elems[0][key][supKey] !== elems[i][key][supKey]) {
+                                similarValues.delete(supKey)
                             }
                         }
                     } else {
-                        if (similarValues.includes(key) && key in blocks[i].content) {
+                        if (similarValues.has(key) && key in elems[i]) {
                             // @ts-ignore
-                            if (blocks[0].content[key] !== blocks[i].content[key]) {
-                                similarValues.splice(similarValues.indexOf(key), 1)
+                            if (elems[0][key] !== elems[i][key]) {
+                                similarValues.delete(key)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return similarValues;
+    }
+
+    function getSimilarValuesOfBlocks( elems: BlockType[]) {
+        const similarValues = new Set<string>();
+
+        for (let key in elems[0].content) {
+            if (key === "position") {
+                for (let supKey in elems[0].content[key]) {
+                    similarValues.add(supKey)
+                }
+            } else {
+                similarValues.add(key)
+            }
+        }
+
+        if (elems.length > 1) {
+            for (let key in elems[0].content) {
+                for (let elem of elems) {
+                    if (key === "position") {
+                        for (let supKey in elems[0].content[key]) {
+                            // @ts-ignore
+                            if (similarValues.has(supKey) && elems[0].content[key][supKey] !== elem.content[key][supKey]) {
+                                similarValues.delete(supKey)
+                            }
+                        }
+                    } else {
+                        if (similarValues.has(key) && key in elem.content) {
+                            // @ts-ignore
+                            if (elems[0].content[key] !== elem.content[key]) {
+                                similarValues.delete(key)
                             }
                         }
                     }

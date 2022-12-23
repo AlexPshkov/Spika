@@ -5,7 +5,7 @@ import triangleIcon from "../../../images/triangle.svg"
 import rectangleIcon from "../../../images/rectangle.svg"
 
 
-function ChangePropertiesButton(content: { name: string, value: "ellipse" | "triangle" | "rectangle", currentStyle: "ellipse" | "triangle" | "rectangle" | null, elems: BlockType[], requireUpdate: () => void}) {
+function ChangeBlockPropertiesButton(content: { name: string, value: "ellipse" | "triangle" | "rectangle", currentStyle: "ellipse" | "triangle" | "rectangle" | null, elems: BlockType[], requireUpdate: () => void}) {
     function updateProperties(value: string) {
         content.elems.forEach(elem => {
             if (elem.content.type === "primitive") {
@@ -47,4 +47,4 @@ function ChangePropertiesButton(content: { name: string, value: "ellipse" | "tri
     )
 }
 
-export default ChangePropertiesButton;
+export default ChangeBlockPropertiesButton;

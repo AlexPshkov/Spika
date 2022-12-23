@@ -16,34 +16,34 @@
     height: 20px;
 }
 
-.topLeftPoint {
+.Point {
     position: absolute;
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.topLeftPoint {
     left: -7px;
     top: -7px;
-    width: 16px;
-    height: 16px;
 }
 
 .topRightPoint {
-    position: absolute;
     right: -11px;
     top: -7px;
-    width: 16px;
-    height: 16px;
 }
 
 .bottomLeftPoint {
-    position: absolute;
     left: -7px;
     bottom: -11px;
-    width: 16px;
-    height: 16px;
 }
 
 .bottomRightPoint {
-    position: absolute;
     right: -11px;
     bottom: -11px;
-    width: 16px;
-    height: 16px;
 }
+
+.bottomRightPoint:hover {
+    fill: red;
+    color: red;
+}
+

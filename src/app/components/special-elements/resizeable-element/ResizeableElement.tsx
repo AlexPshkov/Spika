@@ -1,9 +1,9 @@
 import React, {ReactNode} from "react";
 import {BlockType} from "../../../OurTypes";
 import styles from "./ResizeableElement.module.css";
-import resizeIcon from "../../../images/resize.svg";
-import rotateIcon from "../../../images/rotate.svg";
-
+import {ReactComponent as resizeIcon} from "../../../images/resize.svg";
+import {ReactComponent as rotateIcon} from "../../../images/rotate.svg";
+import {SvgIcon} from "@mui/material";
 
 function ResizeableElement(content: { element: ReactNode, elementContext: BlockType, transformUpdateFunc: (angle: number, width: number, height: number) => void, positionUpdateFunc: (x: number, y: number) => void }) {
     let isTaken: boolean = false;
@@ -28,7 +28,7 @@ function ResizeableElement(content: { element: ReactNode, elementContext: BlockT
         transform: `rotate(${content.elementContext.content.position.angle}deg)`
     };
 
-    function onMouseDown(mouseEvent: React.MouseEvent<HTMLDivElement>, cornerNumber: number) {
+    function onMouseDown(mouseEvent: React.MouseEvent<SVGSVGElement>, cornerNumber: number) {
         isTaken = true;
         dragStartX = mouseEvent.clientX;
         dragStartY = mouseEvent.clientY;
@@ -94,21 +94,21 @@ function ResizeableElement(content: { element: ReactNode, elementContext: BlockT
     if (content.elementContext.isSelected) {
         contentElement = <div className={styles.transformBlock}>
             {content.element}
-            <img className={styles.topLeftPoint}
-                 onMouseDown={(event) => onMouseDown(event, 1)}
-                 src={resizeIcon} alt={""}/>
-            <img className={styles.topRightPoint}
-                 onMouseDown={(event) => onMouseDown(event, 2)}
-                 src={resizeIcon} alt={""}/>
-            <img className={styles.bottomLeftPoint}
-                 onMouseDown={(event) => onMouseDown(event, 3)}
-                 src={resizeIcon} alt={""}/>
-            <img className={styles.bottomRightPoint}
-                 onMouseDown={(event) => onMouseDown(event, 4)}
-                 src={resizeIcon} alt={""}/>
-            <img className={styles.middleRotate}
-                 onMouseDown={(event) => onMouseDown(event, 5)}
-                 src={rotateIcon} alt={""}/>
+            <SvgIcon className={styles.topLeftPoint + " " + styles.Point}
+                     onMouseDown={(event) => onMouseDown(event, 1)}
+                     component={resizeIcon}/>
+            <SvgIcon className={styles.topRightPoint + " " + styles.Point}
+                     onMouseDown={(event) => onMouseDown(event, 2)}
+                     component={resizeIcon}/>
+            <SvgIcon className={styles.bottomLeftPoint + " " + styles.Point}
+                     onMouseDown={(event) => onMouseDown(event, 3)}
+                     component={resizeIcon}/>
+            <SvgIcon className={styles.bottomRightPoint + " " + styles.Point}
+                     onMouseDown={(event) => onMouseDown(event, 4)}
+                     component={resizeIcon}/>
+            <SvgIcon className={styles.middleRotate}
+                     onMouseDown={(event) => onMouseDown(event, 5)}
+                     component={rotateIcon}/>
         </div>
     }
 

@@ -2,23 +2,21 @@ import styles from "./PresentationEditor.module.css";
 import SlideEditor from "../slide-editor/SlideEditor";
 import ToolBar from "../tool-bar/ToolBar";
 import NavigationBar from "../nav-bar/NavigationBar";
-import {PresentationType, SlideType} from "../../OurTypes";
+import {PresentationType} from "../../OurTypes";
 import SlidesList from "../slides-list/SlidesList";
 import {useState} from "react";
 import InformationPanel from "../information-panel/InformationPanel";
 
 function PresentationEditor(content: { presentation: PresentationType }) {
     const [presentation, setPresentation] = useState<PresentationType>(content.presentation);
-    const slide = presentation.slides[0];
+    let slide = presentation.slides.find(slide => slide.id === presentation.currentSlideId) || presentation.slides[0];
 
-    function UpdatePresentation() {
+    function updatePresentation() {
         setPresentation({...presentation});
     }
 
+    function updatePresent( presentation: PresentationType ) {
 
-    function UpdateSlide( slide: SlideType ) {
-
-        //TODO обновление конкретного слайда
         setPresentation({...presentation});
     }
 
@@ -30,15 +28,12 @@ function PresentationEditor(content: { presentation: PresentationType }) {
                            currentSlideId={presentation.currentSlideId}/>
 
             <div className={styles.horizontal}>
-                <ToolBar presentation={presentation} requireUpdate={() => UpdatePresentation()}/>
+                <ToolBar presentation={presentation} requireUpdate={() => updatePresentation()}/>
                 <div className={styles.slideField}>
-                    <SlideEditor slide={slide} updateSlide={slide => UpdateSlide(slide)} />
-                    <SlidesList name={presentation.name}
-                                slides={presentation.slides}
-                                selection={presentation.selection}
-                                currentSlideId={presentation.currentSlideId}/>
+                    <SlideEditor slide={slide} updatePresentation={() => updatePresentation()}/>
+                    <SlidesList presentation={presentation} updateFunc={() => updatePresent(presentation)}/>
                 </div>
-                <InformationPanel presentation={presentation} requireUpdate={() => UpdatePresentation()}/>
+                <InformationPanel presentation={presentation} requireUpdate={() => updatePresentation()}/>
             </div>
 
         </div>
