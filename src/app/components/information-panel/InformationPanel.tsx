@@ -6,7 +6,7 @@ import ChangeBlockPropertiesButton from "../special-elements/change-properties-b
 import ChangeSlidePropertiesField from "../special-elements/change-properties-field/ChangeSlidePropertiesField";
 
 function InformationPanel( content: { presentation: PresentationType, requireUpdate: () => void }) {
-    const [presentation, setSlides] = useState<PresentationType>({...content.presentation});
+    const [presentation, setPresentation] = useState<PresentationType>({...content.presentation});
     const slides: SlideType[] = presentation.slides;
 
     // Blocks
@@ -45,7 +45,7 @@ function InformationPanel( content: { presentation: PresentationType, requireUpd
     }
 
     function localUpdate() {
-        setSlides({...presentation});
+        setPresentation({...presentation});
     }
 
     function createSlideProperties(): any {

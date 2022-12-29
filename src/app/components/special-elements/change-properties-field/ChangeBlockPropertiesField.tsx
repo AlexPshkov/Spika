@@ -54,7 +54,7 @@ function ChangeBlockPropertiesField(content: { name: string, type: "number" | "s
 
 
     return <input name={content.name}
-                  type={content.type}
+                  type={content.type === "string" ? "text" : content.type}
                   value={content.value}
                   onChange={(event) => updateProperties( event.target.value )}
                   onKeyDown={(event) => onKeyDownHandler(event)}/>

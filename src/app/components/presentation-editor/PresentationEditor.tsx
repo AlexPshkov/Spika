@@ -22,10 +22,7 @@ function PresentationEditor(content: { presentation: PresentationType }) {
 
     return (
         <div className={styles.editor}>
-            <NavigationBar name={presentation.name}
-                           slides={presentation.slides}
-                           selection={presentation.selection}
-                           currentSlideId={presentation.currentSlideId}/>
+            <NavigationBar presentation={presentation} requireUpdate={() => updatePresentation()}/>
 
             <div className={styles.horizontal}>
                 <ToolBar presentation={presentation} requireUpdate={() => updatePresentation()}/>
