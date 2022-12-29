@@ -7,13 +7,13 @@ import MovableElement from "../special-elements/movable-element/MovableElement";
 import ResizeableElement from "../special-elements/resizeable-element/ResizeableElement";
 import SelectableElement from "../special-elements/selectable-element/SelectableElement";
 
-function SlideEditor(content: { slide: SlideType, updatePresentation: () => void } ) {
+function SlideEditor(content: { slide: SlideType | undefined, updatePresentation: () => void } ) {
     const slide = content.slide;
 
     let style = {
-        background: slide.background,
-        width: slide.resolution.width,
-        height: slide.resolution.height
+        background: slide?.background,
+        width: slide?.resolution.width,
+        height: slide?.resolution.height
     }
 
     function updateElementPosition(block: BlockType, x: number, y: number) {
@@ -70,11 +70,11 @@ function SlideEditor(content: { slide: SlideType, updatePresentation: () => void
         return resizeableElement;
     }
 
-    return (
-        <div className={styles.slideEditor} style={style} >
-            {slide.blocks.map(x => visualizeBlock(x))}
+    return slide ? (
+        <div className={styles.slideEditor} style={style}>
+            {slide?.blocks.map(x => visualizeBlock(x))}
         </div>
-    );
+    ) : <div></div>
 }
 
 

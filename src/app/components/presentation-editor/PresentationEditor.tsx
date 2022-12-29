@@ -3,20 +3,15 @@ import SlideEditor from "../slide-editor/SlideEditor";
 import ToolBar from "../tool-bar/ToolBar";
 import NavigationBar from "../nav-bar/NavigationBar";
 import {PresentationType} from "../../OurTypes";
-import SlidesList from "../slides-list/SlidesList";
+import SlidesPanel from "../slides-panel/SlidesPanel";
 import {useState} from "react";
 import InformationPanel from "../information-panel/InformationPanel";
 
 function PresentationEditor(content: { presentation: PresentationType }) {
     const [presentation, setPresentation] = useState<PresentationType>(content.presentation);
-    let slide = presentation.slides.find(slide => slide.id === presentation.currentSlideId) || presentation.slides[0];
+    let slide = presentation.slides.find(slide => slide.id === presentation.currentSlideId);
 
     function updatePresentation() {
-        setPresentation({...presentation});
-    }
-
-    function updatePresent( presentation: PresentationType ) {
-
         setPresentation({...presentation});
     }
 
@@ -28,7 +23,7 @@ function PresentationEditor(content: { presentation: PresentationType }) {
                 <ToolBar presentation={presentation} requireUpdate={() => updatePresentation()}/>
                 <div className={styles.slideField}>
                     <SlideEditor slide={slide} updatePresentation={() => updatePresentation()}/>
-                    <SlidesList presentation={presentation} updateFunc={() => updatePresent(presentation)}/>
+                    <SlidesPanel presentation={presentation} updateFunc={() => updatePresentation()}/>
                 </div>
                 <InformationPanel presentation={presentation} requireUpdate={() => updatePresentation()}/>
             </div>

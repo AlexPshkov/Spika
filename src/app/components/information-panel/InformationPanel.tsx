@@ -6,8 +6,9 @@ import ChangeBlockPropertiesButton from "../special-elements/change-properties-b
 import ChangeSlidePropertiesField from "../special-elements/change-properties-field/ChangeSlidePropertiesField";
 
 function InformationPanel( content: { presentation: PresentationType, requireUpdate: () => void }) {
-    const [presentation, setPresentation] = useState<PresentationType>({...content.presentation});
-    const slides: SlideType[] = presentation.slides;
+    const [presentation, setPresentation] = useState<PresentationType>({...content.presentation})
+    const slides: SlideType[] = presentation.slides
+    if (slides !== content.presentation.slides) setPresentation({...content.presentation})
 
     // Blocks
     const textFields = [
@@ -72,10 +73,10 @@ function InformationPanel( content: { presentation: PresentationType, requireUpd
     }
 
     function createBlockProperties(): any {
-        const currentSlide = (slides.find(slide => {return slide.id === content.presentation.currentSlideId})) || slides[0];
+        const currentSlide = (slides.find(slide => slide.id === content.presentation.currentSlideId));
         const selectedBlocks: BlockType[] = [];
 
-        currentSlide.blocks.forEach( block => {
+        currentSlide?.blocks.forEach( block => {
             if ( block.isSelected ) selectedBlocks.push(block)
         });
 

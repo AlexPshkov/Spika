@@ -11,7 +11,7 @@ function NavigationBar( content: { presentation: PresentationType, requireUpdate
     const [presentation, setPresentation] = useState<PresentationType>({...content.presentation})
 
     function globalUpdate() {
-        content.presentation = presentation;
+        content.presentation.name = presentation.name;
         content.requireUpdate();
     }
 
