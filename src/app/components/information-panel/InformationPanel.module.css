@@ -47,13 +47,13 @@
     font-size: 16px;
 }
 
-.properties div {
-    display: flex;
-    flex-direction: row;
-    gap: 5px;
-    width: 100%;
-    white-space: nowrap;
-}
+/*.properties div {*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*    gap: 5px;*/
+/*    width: 100%;*/
+/*    white-space: nowrap;*/
+/*}*/
 
 .properties div input {
     width: 100%;

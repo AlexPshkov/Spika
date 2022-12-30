@@ -4,7 +4,9 @@ import React from "react";
 import Picture from "../base-elements/picture/Picture";
 import Primitive from "../base-elements/primitives/Primitive";
 import Text from "../base-elements/text/Text";
-import newSlideIcon from "../../images/new_slide.svg";
+import {ReactComponent as newSlideIcon} from "../../images/new_slide.svg";
+import {ReactComponent as deleteSlideIcon} from "../../images/delete_slide.svg";
+import {SvgIcon} from "@mui/material";
 
 
 function SlidesPanel( content: { presentation: PresentationType, updateFunc: () => void}) {
@@ -134,8 +136,8 @@ function SlidesPanel( content: { presentation: PresentationType, updateFunc: () 
     return (
         <div className={styles.slidesPanel}>
             <div className={styles.tools}>
-                <div className={styles.tool} title={"Создать новый слайд"} onClick={CreateSlide}><img src={newSlideIcon} alt={"New slide"}/></div>
-                <div className={styles.tool} title={"Удалить выбранные слайды"} onClick={DeleteSlides}><img src={newSlideIcon} alt={"New slide"}/></div>
+                <div className={styles.tool} title={"Создать новый слайд"} onClick={CreateSlide}><SvgIcon component={newSlideIcon} inheritViewBox={true}/></div>
+                <div className={styles.tool} title={"Удалить выбранные слайды"} onClick={DeleteSlides}><SvgIcon component={deleteSlideIcon} inheritViewBox={true}/></div>
             </div>
             <div className={styles.slidesList}>
                 {content.presentation.slides.map(x => visualizeSlide(x))}

@@ -4,6 +4,8 @@ import {useState} from "react";
 import ChangeBlockPropertiesField from "../special-elements/change-properties-field/ChangeBlockPropertiesField";
 import ChangeBlockPropertiesButton from "../special-elements/change-properties-button/ChangeBlockPropertiesButton";
 import ChangeSlidePropertiesField from "../special-elements/change-properties-field/ChangeSlidePropertiesField";
+import ChangeBlockPropertiesColorPicker
+    from "../special-elements/change-properties-field/ChangeBlockPropertiesColorPicker";
 
 function InformationPanel( content: { presentation: PresentationType, requireUpdate: () => void }) {
     const [presentation, setPresentation] = useState<PresentationType>({...content.presentation})
@@ -170,12 +172,26 @@ function InformationPanel( content: { presentation: PresentationType, requireUpd
                     similarBlockValues
                 ))
                 break;
+            case "fontColor":
+            case "backgroundColor":
+            case "borderColor":
+                content = visualizeBlockPropColorPicker(type, blocks, similarBlockValues)
+                break;
             default:
                 content = visualizeBlockPropField(type, blocks, similarBlockValues)
         }
 
         return(
             <div>{name}:{content}</div>
+        )
+    }
+
+    function visualizeBlockPropColorPicker(type: string, blocks: BlockType[], similarBlockValues: Set<string>) {
+        // @ts-ignore
+        let value = blocks[0].content[type]
+
+        return(
+            <ChangeBlockPropertiesColorPicker name={type} color={similarBlockValues.has(type) ? value : ''} elems={blocks} localUpdate={() => localUpdate()} globalUpdate={() => globalUpdate()}/>
         )
     }
 

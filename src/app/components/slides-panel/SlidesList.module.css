@@ -24,7 +24,7 @@
 
 .tool {
     display: flex;
-    justify-content: center;
+    align-items: center;
     flex-grow: 1;
     padding: 0 8px;
 
@@ -47,6 +47,11 @@
 
 .tool img {
     width: inherit;
+}
+
+.tool svg {
+    width: 100% !important;
+    height: 100% !important;
 }
 
 .slidesList {

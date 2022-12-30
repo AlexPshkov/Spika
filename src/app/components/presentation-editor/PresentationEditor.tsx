@@ -9,7 +9,7 @@ import InformationPanel from "../information-panel/InformationPanel";
 
 function PresentationEditor(content: { presentation: PresentationType }) {
     const [presentation, setPresentation] = useState<PresentationType>(content.presentation);
-    let slide = presentation.slides.find(slide => slide.id === presentation.currentSlideId);
+    const slide = presentation.slides.find(slide => slide.id === presentation.currentSlideId);
 
     function updatePresentation() {
         setPresentation({...presentation});
