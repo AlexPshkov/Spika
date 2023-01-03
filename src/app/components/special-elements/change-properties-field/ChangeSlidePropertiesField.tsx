@@ -1,5 +1,6 @@
 import {SlideType} from "../../../OurTypes";
 import React from "react";
+import styles from "../../information-panel/InformationPanel.module.css";
 
 
 function ChangeSlidePropertiesField(content: { name: string, type: "number" | "string", value: string, elems: SlideType[], localUpdate: () => void, globalUpdate: () => void }) {
@@ -27,7 +28,8 @@ function ChangeSlidePropertiesField(content: { name: string, type: "number" | "s
     }
 
 
-    return <input name={content.name}
+    return <input className={styles.propertyField}
+                  name={content.name}
                   type={content.type === "string" ? "text" : content.type}
                   value={(content.value.toString().startsWith("url(") && content.value.toString().endsWith(")")) ? content.value.slice(4, -1) : content.value}
                   onChange={(event) => updateProperties( event.target.value )}

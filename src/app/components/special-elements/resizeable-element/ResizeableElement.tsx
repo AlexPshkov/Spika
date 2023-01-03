@@ -108,7 +108,7 @@ function ResizeableElement(content: { element: ReactNode, elementContext: BlockT
                      component={resizeIcon}/>
             <SvgIcon className={styles.middleRotate}
                      onMouseDown={(event) => onMouseDown(event, 5)}
-                     component={rotateIcon}/>
+                     component={rotateIcon} inheritViewBox={true}/>
         </div>
     }
 

@@ -1,6 +1,9 @@
 import {BlockType} from "../../../OurTypes";
 import React, {useState} from "react";
 import {ChromePicker, Color, ColorResult} from "react-color";
+import {ReactComponent as PickColorIcon} from "../../../images/pick_color.svg";
+import {SvgIcon} from "@mui/material";
+import styles from "../../information-panel/InformationPanel.module.css";
 
 
 function ChangeBlockPropertiesColorPicker(content: { name: string, color: string, elems: BlockType[], localUpdate: () => void, globalUpdate: () => void }) {
@@ -16,6 +19,7 @@ function ChangeBlockPropertiesColorPicker(content: { name: string, color: string
     const popover: React.CSSProperties = {
         position: 'absolute',
         zIndex: '100',
+        right: '20px',
     }
     const cover: React.CSSProperties = {
         position: 'fixed',
@@ -24,7 +28,7 @@ function ChangeBlockPropertiesColorPicker(content: { name: string, color: string
         bottom: '0px',
         left: '0px',
     }
-    
+
     function updateProperties( colorResult: ColorResult ) {
         const colorText = "rgba(" + colorResult.rgb.r + ", " + colorResult.rgb.g + ", " + colorResult.rgb.b + ", " + colorResult.rgb.a + ")"
         content.elems.forEach(elem => {
@@ -46,7 +50,10 @@ function ChangeBlockPropertiesColorPicker(content: { name: string, color: string
 
 
     return <div>
-        <button onClick={() => setState(!state) }>Pick Color</button>
+        <button className={styles.propertyButton + " " + (state ? styles.propertyButtonSelected : "")}
+                onClick={() => setState(!state) }>
+            <SvgIcon component={PickColorIcon} inheritViewBox={true}/>
+        </button>
         { state ? <div style={ popover }>
             <div style={ cover } onClick={() => setState(!state) }/>
             <ChromePicker color={color}

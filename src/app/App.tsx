@@ -63,18 +63,18 @@ function App() {
         {
             id: 1,
             blocks: blocks,
-            background: "white",
+            background: "rgb(255,255,255, 1)",
             resolution: {
                 width: 600,
                 height: 600
             },
-            isSelected: true,
+            isSelected: false,
             selectedBlocks: []
         },
         {
             id: 2,
             blocks: [],
-            background: "white",
+            background: "rgb(255,255,255, 1)",
             resolution: {
                 width: 1000,
                 height: 500

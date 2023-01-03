@@ -5,12 +5,12 @@ import styles from "./SelectableElement.module.css";
 
 function SelectableElement(content: { element: ReactNode, elementContext: BlockType, selectUpdateFunc: (isSelected: boolean) => void }) {
 
-    function onMouseDownHandler(mouseEvent: React.MouseEvent<HTMLDivElement>) {
+    function onClickHandler() {
         content.selectUpdateFunc(!content.elementContext.isSelected);
     }
 
     return (
-        <div onMouseDown={(event) => onMouseDownHandler(event)}
+        <div onClick={() => onClickHandler()}
              className={content.elementContext.isSelected ? styles.selectedElement : styles.nonSelectedElement}>
             {content.element}
         </div>

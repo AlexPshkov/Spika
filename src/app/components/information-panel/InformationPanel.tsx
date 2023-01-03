@@ -5,7 +5,10 @@ import ChangeBlockPropertiesField from "../special-elements/change-properties-fi
 import ChangeBlockPropertiesButton from "../special-elements/change-properties-button/ChangeBlockPropertiesButton";
 import ChangeSlidePropertiesField from "../special-elements/change-properties-field/ChangeSlidePropertiesField";
 import ChangeBlockPropertiesColorPicker
-    from "../special-elements/change-properties-field/ChangeBlockPropertiesColorPicker";
+    from "../special-elements/change-properties-button/ChangeBlockPropertiesColorPicker";
+import ChangeSlidePropertiesColorPicker
+    from "../special-elements/change-properties-button/ChangeSlidePropertiesColorPicker";
+import ChangeSlidePropertiesButton from "../special-elements/change-properties-button/ChangeSlidePropertiesButton";
 
 function InformationPanel( content: { presentation: PresentationType, requireUpdate: () => void }) {
     const [presentation, setPresentation] = useState<PresentationType>({...content.presentation})
@@ -30,8 +33,7 @@ function InformationPanel( content: { presentation: PresentationType, requireUpd
     ]
     const universalFields = [
         {key: "position", value: "Позиция"},
-        {key: "width", value: "Ширина"},
-        {key: "height", value: "Высота"},
+        {key: "size", value: "Размер"},
         {key: "angle", value: "Поворот"}
     ]
     const primitiveStyles = ["ellipse", "triangle", "rectangle"]
@@ -120,16 +122,31 @@ function InformationPanel( content: { presentation: PresentationType, requireUpd
     function visualizeSlideProperty(type: string, name: string, slides: SlideType[], similarSlideValues: Set<string>) {
         let content;
 
-        if (type === "resolution") {
-            content = ["width", "height"].map(value => visualizeSlidePropField(value, slides, similarSlideValues))
-        } else {
-            content = visualizeSlidePropField(type, slides, similarSlideValues)
+        switch (type){
+            case "resolution":
+                content = ["width", "height"].map(value => visualizeSlidePropField(value, slides, similarSlideValues))
+                break;
+            case "background":
+                content = <>{visualizeSlidePropColorPicker(type, slides, similarSlideValues)}
+                    {visualizeSlidePropButton(type, slides, similarSlideValues)}</>
+                break;
+            default:
+                content = visualizeSlidePropField(type, slides, similarSlideValues)
         }
 
         return(
-            <div>{name}:
+            <div className={styles.property}>{name}:
                 {content}
             </div>
+        )
+    }
+
+    function visualizeSlidePropColorPicker(type: string, slides: SlideType[], similarSlideValues: Set<string>) {
+        // @ts-ignore
+        let value = slides[0][type]
+
+        return(
+            <ChangeSlidePropertiesColorPicker name={type} color={similarSlideValues.has(type) ? value : ''} elems={slides} localUpdate={() => localUpdate()} globalUpdate={() => globalUpdate()}/>
         )
     }
 
@@ -154,19 +171,40 @@ function InformationPanel( content: { presentation: PresentationType, requireUpd
         )
     }
 
+    function visualizeSlidePropButton(type: string, slides: SlideType[], similarSlideValues: Set<string>) {
+        // @ts-ignore
+        const value = slides[0][type]
+
+        return <ChangeSlidePropertiesButton name={type}
+                                            value={similarSlideValues.has(type) ? value : ""}
+                                            elems={slides}
+                                            localUpdate={() => localUpdate()}
+                                            globalUpdate={() => globalUpdate()}/>
+    }
+
     function visualizeBlockProperty(type: string, name: string, blocks: BlockType[], similarBlockValues: Set<string>) {
         let content;
 
         switch (type) {
             case "style":
                 content = primitiveStyles.map(style => visualizeBlockPropButton(
-                    style as "ellipse" | "triangle" | "rectangle",
+                    style,
                     blocks,
                     similarBlockValues
                 ))
                 break;
+            case "url":
+                content = visualizeBlockPropButton(type, blocks, similarBlockValues)
+                break;
             case "position":
                 content = ["x", "y"].map(value => visualizeBlockPropField(
+                    value,
+                    blocks,
+                    similarBlockValues
+                ))
+                break;
+            case "size":
+                content = ["width", "height"].map(value => visualizeBlockPropField(
                     value,
                     blocks,
                     similarBlockValues
@@ -182,7 +220,7 @@ function InformationPanel( content: { presentation: PresentationType, requireUpd
         }
 
         return(
-            <div>{name}:{content}</div>
+            <div className={styles.property}>{name}:{content}</div>
         )
     }
 
@@ -216,16 +254,35 @@ function InformationPanel( content: { presentation: PresentationType, requireUpd
         )
     }
 
-    function visualizeBlockPropButton(style: "ellipse" | "triangle" | "rectangle", blocks: BlockType[], similarBlockValue: Set<string>) {
-        const currentStyle = blocks[0].content.type === "primitive" ? blocks[0].content.style : null
+    function visualizeBlockPropButton(type: string, blocks: BlockType[], similarBlockValues: Set<string>) {
+        switch (type) {
+            case "rectangle":
+            case "ellipse":
+            case "triangle":
+                const currentStyle = blocks[0].content.type === "primitive" ? blocks[0].content.style : null
 
-        return(
-            <ChangeBlockPropertiesButton name={"style"}
-                                         value={style}
-                                         currentStyle={similarBlockValue.has("style") ? currentStyle : null}
-                                         elems={blocks}
-                                         requireUpdate={() => globalUpdate()}/>
-        )
+                return(
+                    <ChangeBlockPropertiesButton name={"style"}
+                                                 value={type}
+                                                 currentStyle={similarBlockValues.has("style") ? currentStyle : null}
+                                                 elems={blocks}
+                                                 localUpdate={() => localUpdate()}
+                                                 globalUpdate={() => globalUpdate()}/>
+                )
+            case "url":
+                // @ts-ignore
+                const value = blocks[0].content[type];
+                
+                return(
+                    <ChangeBlockPropertiesButton name={type}
+                                                 value={similarBlockValues.has(type) ? value : ""}
+                                                 elems={blocks}
+                                                 localUpdate={() => localUpdate()}
+                                                 globalUpdate={() => globalUpdate()}/>
+                )
+        }
+
+
     }
 
     function getSimilarValuesOfSlides( elems: SlideType[] ) {

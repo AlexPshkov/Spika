@@ -47,14 +47,52 @@
     font-size: 16px;
 }
 
-/*.properties div {*/
-/*    display: flex;*/
-/*    flex-direction: row;*/
-/*    gap: 5px;*/
-/*    width: 100%;*/
-/*    white-space: nowrap;*/
-/*}*/
+.property {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+    white-space: nowrap;
+}
 
-.properties div input {
+.propertyField {
+    background: #FFEE95;
+    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+    text-align: center;
+    border: none;
+    outline: none;
+    padding: 4px 4px;
+
     width: 100%;
+}
+
+.propertyButton {
+    padding: 4px;
+
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+
+    background: #FFEE95;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+}
+
+.propertyButtonSelected {
+    box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.25);
+    border: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.propertyButton svg {
+    width: 100% !important;
+    height: 100% !important;
 }

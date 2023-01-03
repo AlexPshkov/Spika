@@ -27,7 +27,10 @@ function NavigationBar( content: { presentation: PresentationType, requireUpdate
                                          value={presentation.name}
                                          localUpdate={() => localUpdate()}
                                          globalUpdate={() => globalUpdate()}/>
-            <div className={styles.exitButton}><SvgIcon component={saveIcon} inheritViewBox={true}/><SvgIcon component={exitIcon} inheritViewBox={true}/></div>
+            <div className={styles.buttons}>
+                <div className={styles.button}><SvgIcon component={saveIcon} inheritViewBox={true}/></div>
+                <div className={styles.button}><SvgIcon component={exitIcon} inheritViewBox={true}/></div>
+            </div>
         </div>
     );
 }

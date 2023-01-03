@@ -1,5 +1,6 @@
 import {BlockType} from "../../../OurTypes";
 import React from "react";
+import styles from "../../information-panel/InformationPanel.module.css";
 
 
 function ChangeBlockPropertiesField(content: { name: string, type: "number" | "string", value: string, elems: BlockType[], localUpdate: () => void, globalUpdate: () => void }) {
@@ -53,7 +54,8 @@ function ChangeBlockPropertiesField(content: { name: string, type: "number" | "s
     }
 
 
-    return <input name={content.name}
+    return <input className={styles.propertyField}
+                  name={content.name}
                   type={content.type === "string" ? "text" : content.type}
                   value={content.value}
                   onChange={(event) => updateProperties( event.target.value )}
