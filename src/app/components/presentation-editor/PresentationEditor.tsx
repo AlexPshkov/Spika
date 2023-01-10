@@ -22,7 +22,9 @@ function PresentationEditor(content: { presentation: PresentationType }) {
             <div className={styles.horizontal}>
                 <ToolBar presentation={presentation} requireUpdate={() => updatePresentation()}/>
                 <div className={styles.slideField}>
-                    <SlideEditor slide={slide} updatePresentation={() => updatePresentation()}/>
+                    <div className={styles.slideContainer}>
+                        <SlideEditor slide={slide} updatePresentation={() => updatePresentation()}/>
+                    </div>
                     <SlidesPanel presentation={presentation} updateFunc={() => updatePresentation()}/>
                 </div>
                 <InformationPanel presentation={presentation} requireUpdate={() => updatePresentation()}/>

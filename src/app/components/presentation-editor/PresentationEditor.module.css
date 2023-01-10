@@ -9,21 +9,33 @@
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 50px);
 }
 
 .slideField {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    padding: 20px 10px 10px;
-
+    justify-content: end;
+    margin-bottom: 10px;
 
     box-sizing: border-box;
     width: 100%;
     min-width: 0;
     height: 100%;
 }
+
+.slideContainer {
+    height: 100%;
+    min-height: 0;
+    padding: 10px;
+    overflow: scroll;
+}
+
+.slideContainer::-webkit-scrollbar {
+    display: none;
+}
+
+
 
 
 

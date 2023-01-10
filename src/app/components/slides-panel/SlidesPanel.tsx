@@ -1,5 +1,5 @@
 import {BlockType, PresentationType, SlideType} from "../../OurTypes";
-import styles from "./SlidesList.module.css";
+import styles from "./SlidesPanel.module.css";
 import React from "react";
 import Picture from "../base-elements/picture/Picture";
 import Primitive from "../base-elements/primitives/Primitive";
@@ -102,8 +102,7 @@ function SlidesPanel( content: { presentation: PresentationType, updateFunc: () 
                 width: 1280,
                 height: 720
             },
-            isSelected: false,
-            selectedBlocks: []
+            isSelected: false
         }
 
         content.presentation.slides.splice(currentSlideIndex + 1, 0, Slide)

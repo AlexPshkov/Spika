@@ -15,8 +15,7 @@ export type SlideType = {
     blocks: BlockType[],
     background: string,
     resolution: Resolution,
-    isSelected: boolean,
-    selectedBlocks: BlockType[]
+    isSelected: boolean
 };
 
 export type Resolution = {
@@ -27,9 +26,6 @@ export type Resolution = {
 export type PresentationType = {
     name: string,
     slides: SlideType[],
-    selection: {
-        selectedSlides: SlideType[]
-    },
     currentSlideId: number
 };
 

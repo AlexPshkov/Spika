@@ -1,7 +1,7 @@
 .slideEditor {
     display: block;
     aspect-ratio: 16 / 9;
-    width: 90%;
+    width: 100%;
     border-color: white;
     background-color: white;
     border-radius: 8px;
