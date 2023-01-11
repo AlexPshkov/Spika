@@ -15,6 +15,13 @@ function NavigationBar( content: { presentation: PresentationType, requireUpdate
     //     PdfConverter.getPdf(content.presentation);
     // }
 
+    function exit() {
+        const main = document.getElementById("main")!
+        const app = document.getElementById("app")!
+        main.hidden = false
+        app.hidden = true
+    }
+
 
     return (
         <div className={styles.navBar}>
@@ -24,7 +31,7 @@ function NavigationBar( content: { presentation: PresentationType, requireUpdate
                                          requireUpdate={( saveState: boolean ) => content.requireUpdate( saveState )}/>
             <div className={styles.buttons}>
                 <button className={styles.button} onClick={() => convertStateToJSON(content.presentation)}><SvgIcon component={saveIcon} inheritViewBox={true}/></button>
-                <button className={styles.button}><SvgIcon component={exitIcon} inheritViewBox={true}/></button>
+                <button className={styles.button} onClick={exit}><SvgIcon component={exitIcon} inheritViewBox={true}/></button>
             </div>
         </div>
     );

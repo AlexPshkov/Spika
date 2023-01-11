@@ -1,7 +1,8 @@
 import {SlideType} from "../../../OurTypes";
 import React from "react";
 import styles from "../../information-panel/InformationPanel.module.css"
-
+import {ReactComponent as FolderIcon} from "../../../images/folder.svg"
+import {SvgIcon} from "@mui/material";
 
 
 function ChangeSlidePropertiesPicture(content: { name: string, elems: SlideType[], globalUpdate: () => void }) {
@@ -25,7 +26,9 @@ function ChangeSlidePropertiesPicture(content: { name: string, elems: SlideType[
 
 
     return <button className={styles.propertyButton}
-                   onClick={updateProperties}/>
+                   onClick={updateProperties}>
+        <SvgIcon component={FolderIcon} inheritViewBox={true}/>
+    </button>
 }
 
 export default ChangeSlidePropertiesPicture;

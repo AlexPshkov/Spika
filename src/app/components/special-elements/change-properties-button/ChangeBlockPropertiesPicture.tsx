@@ -1,6 +1,8 @@
 import {BlockType} from "../../../OurTypes";
 import React from "react";
 import styles from "../../information-panel/InformationPanel.module.css"
+import {SvgIcon} from "@mui/material";
+import {ReactComponent as FolderIcon} from "../../../images/folder.svg"
 
 
 
@@ -25,7 +27,9 @@ function ChangeBlockPropertiesPicture(content: { name: string, elems: BlockType[
 
 
     return <button className={styles.propertyButton}
-                   onClick={updateProperties}/>
+                   onClick={updateProperties}>
+        <SvgIcon component={FolderIcon} inheritViewBox={true}/>
+    </button>
 }
 
 export default ChangeBlockPropertiesPicture;

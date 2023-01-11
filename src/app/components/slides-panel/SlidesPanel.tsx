@@ -94,7 +94,7 @@ function SlidesPanel( content: { presentation: PresentationType, updateFunc: ( s
         const Slide: SlideType = {
             id: id,
             blocks: [],
-            background: "white",
+            background: "rgba(255, 255, 255, 1)",
             resolution: {
                 width: 1280,
                 height: 720
