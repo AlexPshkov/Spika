@@ -10,7 +10,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App presentation={{name: "Test", slides: [], currentSlideId: -1}}/>
+    <App/>
       {/*<Main/>*/}
   </React.StrictMode>
 );

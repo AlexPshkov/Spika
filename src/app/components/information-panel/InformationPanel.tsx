@@ -9,7 +9,6 @@ import ChangeBlockPropertiesColorPicker
 import ChangeSlidePropertiesColorPicker
     from "../special-elements/change-properties-button/ChangeSlidePropertiesColorPicker";
 import ChangeSlidePropertiesButton from "../special-elements/change-properties-button/ChangeSlidePropertiesButton";
-import ChangePicture from "../special-elements/change-properties-button/ChangeBlockPropertiesPicture";
 import ChangeBlockPropertiesPicture from "../special-elements/change-properties-button/ChangeBlockPropertiesPicture";
 import ChangeSlidePropertiesPicture from "../special-elements/change-properties-button/ChangeSlidePropertiesPicture";
 
