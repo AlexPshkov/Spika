@@ -57,18 +57,14 @@ function SlidesPanel( content: { presentation: PresentationType, updateFunc: () 
     }
 
     function visualizeSlide( slide: SlideType ) {
-        const style: React.CSSProperties = {
+        const style = {
             background: slide.background,
             width: slide.resolution.width,
             height: slide.resolution.height,
             zoom: maxHeight/slide.resolution.height,
-            position: "relative",
-            overflow: "hidden",
-            userSelect: "none",
-            flexShrink: 0
         }
 
-        return <div className={(slide.isSelected ? styles.selectedSlide : (content.presentation.currentSlideId === slide.id ? styles.currentSlide : ""))}
+        return <div className={styles.slide + " " + (slide.isSelected ? styles.selectedSlide : (content.presentation.currentSlideId === slide.id ? styles.currentSlide : ""))}
                     style={style}
                     onMouseDown={(event) => onMouseDownHandler(event, slide)}>
             {slide.blocks.map(x => visualizeBlock(x))}

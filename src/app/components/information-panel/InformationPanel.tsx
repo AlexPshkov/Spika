@@ -9,6 +9,9 @@ import ChangeBlockPropertiesColorPicker
 import ChangeSlidePropertiesColorPicker
     from "../special-elements/change-properties-button/ChangeSlidePropertiesColorPicker";
 import ChangeSlidePropertiesButton from "../special-elements/change-properties-button/ChangeSlidePropertiesButton";
+import ChangePicture from "../special-elements/change-properties-button/ChangeBlockPropertiesPicture";
+import ChangeBlockPropertiesPicture from "../special-elements/change-properties-button/ChangeBlockPropertiesPicture";
+import ChangeSlidePropertiesPicture from "../special-elements/change-properties-button/ChangeSlidePropertiesPicture";
 
 function InformationPanel( content: { presentation: PresentationType, requireUpdate: () => void }) {
     const [presentation, setPresentation] = useState<PresentationType>({...content.presentation})
@@ -127,8 +130,7 @@ function InformationPanel( content: { presentation: PresentationType, requireUpd
                 content = ["width", "height"].map(value => visualizeSlidePropField(value, slides, similarSlideValues))
                 break;
             case "background":
-                content = <>{visualizeSlidePropColorPicker(type, slides, similarSlideValues)}
-                    {visualizeSlidePropButton(type, slides, similarSlideValues)}</>
+                content = visualizeSlidePropColorPicker(type, slides, similarSlideValues)
                 break;
             default:
                 content = visualizeSlidePropField(type, slides, similarSlideValues)
@@ -145,8 +147,15 @@ function InformationPanel( content: { presentation: PresentationType, requireUpd
         // @ts-ignore
         let value = slides[0][type]
 
-        return(
-            <ChangeSlidePropertiesColorPicker name={type} color={similarSlideValues.has(type) ? value : ''} elems={slides} localUpdate={() => localUpdate()} globalUpdate={() => globalUpdate()}/>
+        return (<>
+                <ChangeSlidePropertiesColorPicker name={type}
+                                                  color={similarSlideValues.has(type) ? value : ''}
+                                                  elems={slides}
+                                                  localUpdate={() => localUpdate()}
+                                                  globalUpdate={() => globalUpdate()}/>
+                {visualizeSlidePropButton(type, slides, similarSlideValues)}
+                <ChangeSlidePropertiesPicture name={type} elems={slides} globalUpdate={() => globalUpdate()}/>
+            </>
         )
     }
 
@@ -273,13 +282,14 @@ function InformationPanel( content: { presentation: PresentationType, requireUpd
                 // @ts-ignore
                 const value = blocks[0].content[type];
                 
-                return(
+                return(<>
                     <ChangeBlockPropertiesButton name={type}
                                                  value={similarBlockValues.has(type) ? value : ""}
                                                  elems={blocks}
                                                  localUpdate={() => localUpdate()}
                                                  globalUpdate={() => globalUpdate()}/>
-                )
+                    <ChangeBlockPropertiesPicture name={type} elems={blocks} globalUpdate={() => globalUpdate()}/>
+                </>)
         }
 
 
