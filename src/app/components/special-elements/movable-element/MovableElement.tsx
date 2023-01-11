@@ -3,7 +3,7 @@ import {BlockPositionType} from "../../../OurTypes";
 import styles from "./MovableElement.module.css";
 
 
-function MovableElement(content: { element: ReactNode, elementPosition: BlockPositionType, positionUpdateFunc: (x: number, y: number) => void }) {
+function MovableElement(content: { element: ReactNode, elementPosition: BlockPositionType, onMoveEnd: () => void, positionUpdateFunc: (x: number, y: number) => void }) {
     let isTaken: boolean = false;
     let dragStartX: number = 0;
     let dragStartY: number = 0;
@@ -30,6 +30,8 @@ function MovableElement(content: { element: ReactNode, elementPosition: BlockPos
 
         document.removeEventListener("mousemove", (event) => onMouseMoveHandler(event) );
         document.removeEventListener("mouseup", (event) => onMouseUpHandler(event) );
+
+        content.onMoveEnd();
     }
 
     function onMouseMoveHandler(mouseEvent: MouseEvent) {

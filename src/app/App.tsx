@@ -1,40 +1,67 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PresentationEditor from "./components/presentation-editor/PresentationEditor";
 import styles from "./App.module.css";
 import {PresentationType} from "./OurTypes";
+import {IUndoRedoService, UndoRedoService} from "./services/undo-redo-service/UndoRedoService";
 
-function App(content: {presentation?: PresentationType}) {
+const presentationKey: string = "spika_presentation";
 
-    let presentation: PresentationType
+function App() {
+    const undoRedoServiceImplementation: IUndoRedoService = new UndoRedoService((presentation: PresentationType) => savePresentation(presentation));
+    const [undoRedoService, setUndoRedoService] = useState<IUndoRedoService>(undoRedoServiceImplementation);
+    const [currentPresentation, setPresentation] = useState<PresentationType>({...getPresentation()});
 
-    if (typeof content.presentation === 'undefined') {
-        presentation = {
-            name: "Presentation name",
-            slides: [
-                {
-                    id: 0,
-                    blocks: [],
-                    background: "rgb(255,255,255, 1)",
-                    resolution: {
-                        width: 600,
-                        height: 600
-                    },
-                    isSelected: false
-                }
-            ],
-            currentSlideId: 0
-        }
-    } else {
-        presentation = content.presentation
+    function savePresentation(presentation: PresentationType) {
+        localStorage.setItem(presentationKey, JSON.stringify(presentation));
+        setPresentation({...presentation});
     }
 
-  return (
-    <div className={styles.App}>
-      <header className="App-header"/>
+    function updatePresentation(saveState: boolean = false) {
+        if (!saveState) {
+            setPresentation({...currentPresentation});
+            return;
+        }
 
-      <PresentationEditor presentation={presentation}/>
-    </div>
-  );
+        undoRedoService.handlePresentationChange(currentPresentation);
+        savePresentation(currentPresentation);
+    }
+
+    function getPresentation(): PresentationType {
+        const previousPresentationJson: string | null = localStorage.getItem(presentationKey);
+        const presentation: PresentationType = previousPresentationJson == null ? getDefaultPresentation() : JSON.parse(previousPresentationJson);
+
+        undoRedoService.setInitialState(presentation);
+        return presentation;
+    }
+
+    function getDefaultPresentation(): PresentationType {
+        return {
+            name: "",
+            slides: [
+                {
+                    id: 1,
+                    isSelected: true,
+                    blocks: [],
+                    resolution: {
+                        width: 900,
+                        height: 600
+                    },
+                    background: "white"
+                }
+            ],
+            currentSlideId: 1
+        };
+    }
+
+    return (
+        <div className={styles.App}>
+            <header className="App-header"/>
+
+            <PresentationEditor presentation={currentPresentation}
+                                undoRedoService={undoRedoService}
+                                updatePresentation={(saveState: boolean = false) => updatePresentation(saveState)}/>
+        </div>
+    );
 }
 
 

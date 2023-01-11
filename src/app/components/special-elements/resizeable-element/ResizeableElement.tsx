@@ -5,7 +5,7 @@ import {ReactComponent as resizeIcon} from "../../../images/resize.svg";
 import {ReactComponent as rotateIcon} from "../../../images/rotate.svg";
 import {SvgIcon} from "@mui/material";
 
-function ResizeableElement(content: { element: ReactNode, elementContext: BlockType, transformUpdateFunc: (angle: number, width: number, height: number) => void, positionUpdateFunc: (x: number, y: number) => void }) {
+function ResizeableElement(content: { element: ReactNode, elementContext: BlockType, onTransformEnd: () => void, transformUpdateFunc: (angle: number, width: number, height: number) => void, positionUpdateFunc: (x: number, y: number) => void }) {
     let isTaken: boolean = false;
     let dragStartX: number = 0;
     let dragStartY: number = 0;
@@ -87,6 +87,8 @@ function ResizeableElement(content: { element: ReactNode, elementContext: BlockT
         isTaken = false;
         document.removeEventListener("mouseup", (event) => onMouseUp(event, cornerNumber) );
         document.removeEventListener("mousemove", (event) => onMouseMove(event, cornerNumber) );
+
+        content.onTransformEnd();
     }
 
     let contentElement: any = content.element;
