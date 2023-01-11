@@ -8,12 +8,12 @@ import ChangePresentationNameField
     from "../special-elements/change-properties-field/ChangePresentationNameField";
 import {SvgIcon} from "@mui/material";
 
-function NavigationBar( content: { presentation: PresentationType, requireUpdate: () => void} ) {
+function NavigationBar( content: { presentation: PresentationType, requireUpdate: ( saveState: boolean ) => void} ) {
     const [presentation, setPresentation] = useState<PresentationType>({...content.presentation})
 
     function globalUpdate() {
         content.presentation.name = presentation.name;
-        content.requireUpdate();
+        content.requireUpdate( true );
     }
 
     function localUpdate() {
