@@ -373,8 +373,10 @@ function InformationPanel( content: { presentation: PresentationType, undoRedoSe
     }
 
     return (<div className={styles.informationPanel}>
-        {createBlockProperties()}
-        {createSlideProperties()}
+        <div className={styles.propertyBlocks}>
+            {createBlockProperties()}
+            {createSlideProperties()}
+        </div>
         <UndoRedoBlock presentation={content.presentation} undoRedoService={content.undoRedoService}/>
     </div>)
 }
