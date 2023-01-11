@@ -6,8 +6,14 @@ import {ReactComponent as saveIcon} from "../../images/save.svg"
 import ChangePresentationNameField
     from "../special-elements/change-properties-field/ChangePresentationNameField";
 import {SvgIcon} from "@mui/material";
+import {PdfConverter} from "../../services/pdf-converter/PdfConverter";
 
 function NavigationBar( content: { presentation: PresentationType, requireUpdate: ( saveState: boolean ) => void} ) {
+
+    function getPdf() {
+        PdfConverter.getPdf(content.presentation);
+    }
+
 
     return (
         <div className={styles.navBar}>
@@ -16,7 +22,7 @@ function NavigationBar( content: { presentation: PresentationType, requireUpdate
                                          value={content.presentation.name}
                                          requireUpdate={( saveState: boolean ) => content.requireUpdate( saveState )}/>
             <div className={styles.buttons}>
-                <button className={styles.button}><SvgIcon component={saveIcon} inheritViewBox={true}/></button>
+                <button className={styles.button} onClick={() => getPdf()}><SvgIcon component={saveIcon} inheritViewBox={true}/></button>
                 <button className={styles.button}><SvgIcon component={exitIcon} inheritViewBox={true}/></button>
             </div>
         </div>

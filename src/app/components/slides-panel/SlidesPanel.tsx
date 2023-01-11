@@ -65,7 +65,7 @@ function SlidesPanel( content: { presentation: PresentationType, updateFunc: ( s
             zoom: maxHeight/slide.resolution.height,
         }
 
-        return <div className={styles.slide + " " + (slide.isSelected ? styles.selectedSlide : (content.presentation.currentSlideId === slide.id ? styles.currentSlide : ""))}
+        return <div id={`slide_${slide.id}`} className={styles.slide + " " + (slide.isSelected ? styles.selectedSlide : (content.presentation.currentSlideId === slide.id ? styles.currentSlide : ""))}
                     style={style}
                     onMouseDown={(event) => onMouseDownHandler(event, slide)}>
             {slide.blocks.map(x => visualizeBlock(x))}

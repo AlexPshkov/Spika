@@ -76,7 +76,7 @@ function SlideEditor(content: { slide: SlideType | undefined, updatePresentation
     }
 
     return slide ? (
-        <div className={styles.slideEditor} style={style}>
+        <div id={`slide_edit_${slide.id}`} className={styles.slideEditor} style={style}>
             {slide?.blocks.map(x => visualizeBlock(x))}
         </div>
     ) : <div></div>
