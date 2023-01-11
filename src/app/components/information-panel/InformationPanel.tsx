@@ -11,8 +11,10 @@ import ChangeSlidePropertiesColorPicker
 import ChangeSlidePropertiesButton from "../special-elements/change-properties-button/ChangeSlidePropertiesButton";
 import ChangeBlockPropertiesPicture from "../special-elements/change-properties-button/ChangeBlockPropertiesPicture";
 import ChangeSlidePropertiesPicture from "../special-elements/change-properties-button/ChangeSlidePropertiesPicture";
+import UndoRedoBlock from "../undo-redo-block/UndoRedoBlock";
+import {IUndoRedoService} from "../../services/undo-redo-service/UndoRedoService";
 
-function InformationPanel( content: { presentation: PresentationType, requireUpdate: () => void }) {
+function InformationPanel( content: { presentation: PresentationType, undoRedoService: IUndoRedoService, requireUpdate: ( saveState: boolean ) => void }) {
     const [presentation, setPresentation] = useState<PresentationType>({...content.presentation})
     const slides: SlideType[] = presentation.slides
     if (slides !== content.presentation.slides) setPresentation({...content.presentation})
@@ -48,7 +50,7 @@ function InformationPanel( content: { presentation: PresentationType, requireUpd
 
     function globalUpdate() {
         content.presentation.slides = slides;
-        content.requireUpdate();
+        content.requireUpdate( true );
     }
 
     function localUpdate() {
@@ -373,6 +375,7 @@ function InformationPanel( content: { presentation: PresentationType, requireUpd
     return (<div className={styles.informationPanel}>
         {createBlockProperties()}
         {createSlideProperties()}
+        <UndoRedoBlock presentation={content.presentation} undoRedoService={content.undoRedoService}/>
     </div>)
 }
 

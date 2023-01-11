@@ -9,9 +9,10 @@ import {ReactComponent as deleteSlideIcon} from "../../images/delete_slide.svg";
 import {SvgIcon} from "@mui/material";
 
 
-function SlidesPanel( content: { presentation: PresentationType, updateFunc: () => void}) {
+function SlidesPanel( content: { presentation: PresentationType, updateFunc: ( saveState: boolean ) => void}) {
     const maxHeight = 145;
     const currentSlide = content.presentation.slides.find(slide => slide.id === content.presentation.currentSlideId)
+
     function onMouseDownHandler(mouseEvent: React.MouseEvent<HTMLDivElement>, slide: SlideType) {
         if (mouseEvent.shiftKey) {
             slide.isSelected = !slide.isSelected;
@@ -20,7 +21,7 @@ function SlidesPanel( content: { presentation: PresentationType, updateFunc: () 
             UnselectBlocks()
             UnselectSlides()
         }
-        content.updateFunc();
+        content.updateFunc( false );
     }
 
     function visualizeBlock( blockType: BlockType ): any {
@@ -108,7 +109,7 @@ function SlidesPanel( content: { presentation: PresentationType, updateFunc: () 
 
         content.presentation.currentSlideId = id
 
-        content.updateFunc();
+        content.updateFunc( true );
     }
 
     function DeleteSlides() {
@@ -125,7 +126,7 @@ function SlidesPanel( content: { presentation: PresentationType, updateFunc: () 
         }
 
 
-        content.updateFunc();
+        content.updateFunc( true );
     }
 
     return (

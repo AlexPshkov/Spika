@@ -6,7 +6,7 @@ import {ReactComponent as figureIcon} from "../../images/figure.svg"
 import {ReactComponent as deleteBlocksIcon} from "../../images/delete_block.svg"
 import {SvgIcon} from "@mui/material";
 
-function ToolBar( content: { presentation: PresentationType, requireUpdate: () => void } ) {
+function ToolBar( content: { presentation: PresentationType, requireUpdate: ( saveState: boolean ) => void } ) {
     const currentSlide = content.presentation.slides.find(slide => { return slide.id === content.presentation.currentSlideId});
 
     function GetMaxId( elements: BlockType[] | SlideType[] | undefined ) {
@@ -47,7 +47,7 @@ function ToolBar( content: { presentation: PresentationType, requireUpdate: () =
         }
         currentSlide?.blocks.push(Block)
 
-        content.requireUpdate();
+        content.requireUpdate( true );
     }
 
     function CreateText() {
@@ -73,7 +73,7 @@ function ToolBar( content: { presentation: PresentationType, requireUpdate: () =
         }
         currentSlide?.blocks.push(Block)
 
-        content.requireUpdate();
+        content.requireUpdate( true );
     }
 
     function CreateImage() {
@@ -96,7 +96,7 @@ function ToolBar( content: { presentation: PresentationType, requireUpdate: () =
         }
         currentSlide?.blocks.push(Block)
 
-        content.requireUpdate();
+        content.requireUpdate( true );
     }
 
 
@@ -107,7 +107,7 @@ function ToolBar( content: { presentation: PresentationType, requireUpdate: () =
             }
         });
 
-        content.requireUpdate();
+        content.requireUpdate( true );
     }
 
     return (

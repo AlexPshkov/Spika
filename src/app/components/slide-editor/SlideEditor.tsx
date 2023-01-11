@@ -7,7 +7,7 @@ import MovableElement from "../special-elements/movable-element/MovableElement";
 import ResizeableElement from "../special-elements/resizeable-element/ResizeableElement";
 import SelectableElement from "../special-elements/selectable-element/SelectableElement";
 
-function SlideEditor(content: { slide: SlideType | undefined, updatePresentation: () => void } ) {
+function SlideEditor(content: { slide: SlideType | undefined, updatePresentation: ( saveState: boolean ) => void } ) {
     const slide = content.slide;
 
     let style = {
@@ -20,13 +20,13 @@ function SlideEditor(content: { slide: SlideType | undefined, updatePresentation
         block.content.position.x = x;
         block.content.position.y = y;
 
-        content.updatePresentation();
+        content.updatePresentation( false );
     }
 
     function updateElementSelect(block: BlockType, isSelected: boolean) {
         block.isSelected = isSelected;
 
-        content.updatePresentation();
+        content.updatePresentation( false );
     }
 
     function updateElementTransform(block: BlockType, angle: number, width: number, height: number ) {
@@ -34,9 +34,12 @@ function SlideEditor(content: { slide: SlideType | undefined, updatePresentation
         block.content.width = width;
         block.content.height = height;
 
-        content.updatePresentation();
+        content.updatePresentation( false );
     }
 
+    function savePresentationState() {
+        content.updatePresentation( true );
+    }
 
     function getBlock( blockType: BlockType ): any {
         const content = blockType.content;
@@ -61,9 +64,11 @@ function SlideEditor(content: { slide: SlideType | undefined, updatePresentation
                                                           selectUpdateFunc={(isSelected) => updateElementSelect(blockType, isSelected)}/>
         const movableElement: any = <MovableElement element={selectableElement}
                                                     elementPosition={blockType.content.position}
+                                                    onMoveEnd={() => savePresentationState()}
                                                     positionUpdateFunc={(x, y) => updateElementPosition(blockType, x, y)}/>;
         const resizeableElement: any = <ResizeableElement element={movableElement}
                                                           elementContext={blockType}
+                                                          onTransformEnd={() => savePresentationState()}
                                                           transformUpdateFunc={(angle, width, height) => updateElementTransform(blockType, angle, width, height)}
                                                           positionUpdateFunc={(x, y) => updateElementPosition(blockType, x, y)}/>
 
