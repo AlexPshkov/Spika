@@ -1,0 +1,9 @@
+version: '3.6'
+services:
+  web-front-end:
+    image: alexpshkov/spika-fe
+    build: .
+    entrypoint: ["nginx", "-g", "daemon off;"]
+    container_name: spika-fe
+    ports:
+      - '80:80'
